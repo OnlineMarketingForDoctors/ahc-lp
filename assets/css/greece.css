@@ -545,6 +545,10 @@ body.lb-open { overflow: hidden; }
 
   /* Journey: snapping keeps the gutter, so the first step's marker is never clipped */
   .journey.is-native .journey-track { scroll-padding-inline: var(--gutter); }
+  /* Marker and its connector sit inside the card: iOS Safari clips anything drawn in the
+     scroller's padding, which cut off the first marker's ring */
+  .journey.is-native .j-node { left: 12px; }
+  .journey.is-native .j-card::before { left: 30px; }
 
   /* Meet: photo fades into the section; the two badges sit side by side below his face */
   .meet-bg::after { background: linear-gradient(0deg, var(--ink) 0%, rgba(25,13,48,.6) 18%, rgba(25,13,48,0) 42%); }
