@@ -113,7 +113,7 @@
   position: relative;
   max-width: var(--max); margin: 0 auto;
   padding: 0 var(--gutter);
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); align-items: start;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); align-items: stretch;
 }
 .as-card {
   position: relative; background: #fff; color: var(--ink);
@@ -125,7 +125,6 @@
 .as-card > div { padding: 22px 24px 26px; display: grid; gap: 6px; }
 .as-card h3 { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; line-height: 1.15; }
 .as-card p { font-size: 15px; color: var(--slate); line-height: 1.55; }
-.as-card-up { transform: translateY(-48px); }
 .as-card:nth-child(3) img { object-position: 50% 30%; }
 
 /* ==========================================================
@@ -413,7 +412,6 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 
   .athens-bg { inset: 0; }
   .athens-strip { grid-template-columns: 1fr; padding-bottom: 20px; }
-  .as-card-up { transform: none; }
   .as-card { display: grid; grid-template-columns: 120px 1fr; }
   .as-card img { aspect-ratio: auto; height: 100%; }
   .as-card > div { padding: 16px 18px; }
