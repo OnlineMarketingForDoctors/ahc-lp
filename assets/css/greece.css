@@ -216,6 +216,9 @@
    RESULTS: hair transplant cases only, arrows and a scrolling thumbnail panel
    ========================================================== */
 .results-intro { color: var(--slate); max-width: 26em; }
+/* White, full-width band for contrast with the grey "Why" section below.
+   The shadow paints the band past the content width; clip-path keeps it from spilling vertically. */
+.results { background: var(--paper); box-shadow: 0 0 0 100vmax var(--paper); clip-path: inset(0 -100vmax); }
 .results-grid { align-items: stretch; }
 .ba-frame { position: relative; }
 .ba-step {
