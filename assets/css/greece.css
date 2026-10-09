@@ -260,11 +260,11 @@
    JOURNEY: a little more room before it
    ========================================================== */
 .vt { padding-bottom: clamp(90px, 10vw, 140px); }
-/* White full-width band, so it stands apart from the grey journey below.
-   The video list cards switch to grey so they still read against it. */
-.vt { background: var(--paper); box-shadow: 0 0 0 100vmax var(--paper); clip-path: inset(0 -100vmax); }
-.vt-list button { background: var(--pearl); box-shadow: none; }
-.vt-list button:hover { background: #fff; }
+/* Journey on white, so it stands apart from the grey sections around it.
+   Cards turn grey to read against it; markers and arrows match the white so they still mask the rail. */
+.journey { background: var(--paper); }
+.j-card:not(.j-now) { background: var(--pearl); box-shadow: none; }
+.j-node, .j-card:not(:last-child) .j-arrow { background: var(--paper); }
 
 /* ==========================================================
    FAQ (sticky layered images + accordion)
