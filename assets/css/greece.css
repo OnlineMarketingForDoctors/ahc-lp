@@ -260,6 +260,11 @@
    JOURNEY: a little more room before it
    ========================================================== */
 .vt { padding-bottom: clamp(90px, 10vw, 140px); }
+/* White full-width band, so it stands apart from the grey journey below.
+   The video list cards switch to grey so they still read against it. */
+.vt { background: var(--paper); box-shadow: 0 0 0 100vmax var(--paper); clip-path: inset(0 -100vmax); }
+.vt-list button { background: var(--pearl); box-shadow: none; }
+.vt-list button:hover { background: #fff; }
 
 /* ==========================================================
    FAQ (sticky layered images + accordion)
@@ -312,7 +317,7 @@
 /* ==========================================================
    ENQUIRY (full bleed image, overlapping form)
    ========================================================== */
-.enquiry { position: relative; color: #fff; overflow: hidden; background: var(--ink); margin-top: clamp(60px, 7vw, 100px); }
+.enquiry { position: relative; color: #fff; overflow: hidden; background: var(--ink); }
 .enquiry-bg { position: absolute; inset: 0; }
 .enquiry-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 80%; transform: scaleX(-1); }
 .enquiry-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(25,13,48,.94) 0%, rgba(25,13,48,.82) 45%, rgba(25,13,48,.55) 100%); }
@@ -413,6 +418,7 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 }
 .footer-disclaimer h2 { color: #fff; font-size: 14px; font-weight: 800; margin-bottom: 6px; }
 .footer-disclaimer p { font-size: 13.5px; line-height: 1.6; max-width: 80em; }
+.powered { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
 .powered a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
 .powered img { width: 18px; height: 18px; }
 .powered a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -545,6 +551,11 @@ body.lb-open { overflow: hidden; }
 
   /* Journey: snapping keeps the gutter, so the first step's marker is never clipped */
   .journey.is-native .journey-track { scroll-padding-inline: var(--gutter); }
+  /* Clinic to enquiry: the clinic note is the last thing before the dark form band */
+  .clinics { padding-bottom: 48px; }
+  /* Footer: no tall empty strip at the end; text stays clear of the floating buttons instead */
+  .footer-bottom { padding-bottom: 24px; padding-right: 72px; }
+  .enquiry-inner { padding-top: 64px; }
   /* Marker and its connector sit inside the card: iOS Safari clips anything drawn in the
      scroller's padding, which cut off the first marker's ring */
   .journey.is-native .j-node { left: 12px; }
