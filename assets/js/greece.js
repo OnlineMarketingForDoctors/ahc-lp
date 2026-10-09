@@ -260,6 +260,30 @@
   }, { threshold: 0.35 }).observe(whyStage);
   showWhy(0);
 
+  /* ---------- Why on phones: the same content as an accordion ---------- */
+  const whyAcc = document.createElement('div');
+  whyAcc.className = 'why-acc';
+  whyAcc.innerHTML = why.map((w, i) => `<details${i === 0 ? ' open' : ''}><summary>${w.t}</summary><div class="wa-body">
+    <video muted loop playsinline preload="none" poster="${A}/video/${w.media}-poster.webp" aria-hidden="true"><source src="${A}/video/${w.media}.mp4" type="video/mp4"></video>
+    ${w.p.map((x) => `<p>${x}</p>`).join('')}${w.l ? `<ul>${w.l.map((x) => `<li>${x}</li>`).join('')}</ul>` : ''}</div></details>`).join('');
+  $('.why-body').after(whyAcc);
+  const accItems = $$('details', whyAcc);
+  let accVisible = false;
+  const accPlay = () => accItems.forEach((d) => {
+    const v = $('video', d);
+    if (d.open && accVisible && !reduceMotion) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause();
+  });
+  accItems.forEach((d) => d.addEventListener('toggle', () => {
+    if (d.open) {
+      accItems.forEach((o) => { if (o !== d) o.open = false; });
+      // Bring the opened item's heading into view if closing the one above moved it off screen
+      const top = d.getBoundingClientRect().top;
+      if (top < 80) scrollTo({ top: scrollY + top - 90, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    accPlay();
+  }));
+  new IntersectionObserver(([en]) => { accVisible = en.isIntersecting; accPlay(); }, { threshold: 0.2 }).observe(whyAcc);
+
   /* ---------- Packages: preselect the package in the form ---------- */
   $$('[data-package]').forEach((a) => a.addEventListener('click', () => {
     const r = $(`input[name="package"][value="${a.dataset.package}"]`);
@@ -311,7 +335,7 @@
     baMain.classList.add('is-swapping');
     setTimeout(() => {
       baMain.src = `${A}/img/ba/${c.f}.webp`;
-      baMain.alt = `Before and after an ${label(c)} with ${c.g} grafts`;
+      baMain.alt = `Before and after an ${label(c)} with ${c.g} grafts. Open full screen`;
       $('#ba-type').textContent = label(c);
       $('#ba-grafts').textContent = c.g;
       $('#ba-hairs').textContent = c.h;
@@ -333,6 +357,78 @@
     tx = null;
   });
   showCase(0, true);
+
+  /* ---------- Lightbox: the main before and after photo opens full screen ---------- */
+  const icon = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+  const lb = document.createElement('div');
+  lb.className = 'lb';
+  lb.hidden = true;
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', 'Before and after photo');
+  lb.innerHTML = `
+    <div class="lb-top"><span class="lb-count" id="lb-count"></span>
+      <button type="button" class="lb-btn lb-close" aria-label="Close">${icon('M6 6l12 12M18 6L6 18')}</button></div>
+    <div class="lb-stage">
+      <button type="button" class="lb-btn" data-step="-1" aria-label="Previous case">${icon('M15 6l-6 6 6 6')}</button>
+      <img id="lb-img" alt="">
+      <button type="button" class="lb-btn" data-step="1" aria-label="Next case">${icon('M9 6l6 6-6 6')}</button>
+    </div>
+    <p class="lb-cap" id="lb-cap"></p>`;
+  document.body.appendChild(lb);
+  const lbImg = $('#lb-img', lb);
+  let lbReturn = null;
+  const lbRender = () => {
+    const c = cases[baCur];
+    lbImg.classList.add('is-swapping');
+    lbImg.onload = () => lbImg.classList.remove('is-swapping');
+    lbImg.src = `${A}/img/ba/${c.f}.webp`;
+    lbImg.alt = `Before and after an ${label(c)} with ${c.g} grafts`;
+    $('#lb-count', lb).textContent = `${baCur + 1} / ${cases.length}`;
+    $('#lb-cap', lb).innerHTML = `<strong>${label(c)}</strong><span>Grafts<b>${c.g}</b></span><span>Hairs<b>${c.h}</b></span><span>Post-procedure<b>${c.m} months</b></span>`;
+  };
+  // Stepping in the lightbox moves the gallery behind it too
+  const lbStep = (d) => { showCase(baCur + d); lbRender(); };
+  const lbOpen = () => {
+    lbReturn = document.activeElement;
+    lbRender();
+    lb.hidden = false;
+    document.body.classList.add('lb-open');
+    $('.lb-close', lb).focus();
+  };
+  const lbClose = () => {
+    lb.hidden = true;
+    document.body.classList.remove('lb-open');
+    if (lbReturn) lbReturn.focus();
+  };
+  baMain.addEventListener('click', lbOpen);
+  baMain.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lbOpen(); } });
+  lb.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (b && b.dataset.step) return lbStep(+b.dataset.step);
+    if (b && b.classList.contains('lb-close')) return lbClose();
+    if (e.target === lb || e.target.classList.contains('lb-stage')) lbClose(); // tap outside the photo
+  });
+  addEventListener('keydown', (e) => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') lbClose();
+    else if (e.key === 'ArrowRight') lbStep(1);
+    else if (e.key === 'ArrowLeft') lbStep(-1);
+    else if (e.key === 'Tab') { // keep focus inside the dialog
+      const f = $$('button', lb);
+      const i = f.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  let lbX = null;
+  lbImg.addEventListener('touchstart', (e) => { lbX = e.touches[0].clientX; }, { passive: true });
+  lbImg.addEventListener('touchend', (e) => {
+    if (lbX === null) return;
+    const dx = e.changedTouches[0].clientX - lbX;
+    if (Math.abs(dx) > 40) lbStep(dx < 0 ? 1 : -1);
+    lbX = null;
+  });
 
   /* ---------- Meet Dr Vekris: Read more ---------- */
   const meetBtn = $('.meet-toggle');
