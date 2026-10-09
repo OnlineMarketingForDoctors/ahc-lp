@@ -252,6 +252,10 @@
    CLINIC
    ========================================================== */
 .clinics { padding-top: clamp(60px, 7vw, 100px); }
+/* Text on the left, images on the right; on narrow screens the images stay first */
+@media (min-width: 1121px) {
+  .clinics .clinics-media { order: 2; }
+}
 .clinic-lead { color: var(--slate); margin: -8px 0 24px; max-width: 34em; }
 .clinic-card {
   background: var(--grad-ink); color: #fff; border-radius: var(--r-lg);
