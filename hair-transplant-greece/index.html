@@ -11,8 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,100..125,400..800;1,100..125,700..800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="/assets/img/greece/hero.webp" media="(min-width: 761px)">
-<link rel="preload" as="image" href="/assets/img/greece/hero-sm.webp" media="(max-width: 760px)">
+<link rel="preload" as="image" href="/assets/video/hero-poster.webp">
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/greece.css">
 </head>
@@ -77,10 +76,9 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero gr-hero" aria-label="Introduction">
-  <picture class="hero-photo">
-    <source media="(max-width: 760px)" srcset="/assets/img/greece/hero-sm.webp">
-    <img src="/assets/img/greece/hero.webp" alt="Dr Anastasios Vekris on a rooftop terrace in Athens, with the Acropolis lit up behind him" width="2400" height="1340" fetchpriority="high">
-  </picture>
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="/assets/video/hero-poster.webp" aria-hidden="true">
+    <source src="/assets/video/hero.mp4" type="video/mp4">
+  </video>
   <div class="hero-shade" aria-hidden="true"></div>
 
   <div class="hero-content">
@@ -134,8 +132,10 @@
     </div>
     <div class="flight-route" aria-hidden="true">
       <span class="fr-code" id="flight-code">LHR</span>
-      <svg class="fr-arc" viewBox="0 0 200 50" preserveAspectRatio="none"><path d="M4 46 Q100 -14 196 46"/></svg>
-      <svg class="fr-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+      <span class="fr-track">
+        <svg class="fr-arc" viewBox="0 0 200 50" preserveAspectRatio="none"><path d="M4 46 Q100 -14 196 46"/></svg>
+        <svg class="fr-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+      </span>
       <span class="fr-code">ATH</span>
     </div>
     <dl class="flight-facts" aria-live="polite">

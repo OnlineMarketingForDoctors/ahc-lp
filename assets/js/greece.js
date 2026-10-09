@@ -43,6 +43,18 @@
   };
   const fCity = $('#flight-city');
   const fRoute = $('.flight-route');
+  // The arc SVG stretches to the card, so the plane's path is rebuilt from the
+  // arc's rendered box using the same curve as the SVG (viewBox 200 x 50).
+  const fTrack = $('.fr-track');
+  const fPlane = $('.fr-plane');
+  const fitPlanePath = () => {
+    const { width: w, height: h } = fTrack.getBoundingClientRect();
+    const x = (v) => (v / 200 * w).toFixed(1);
+    const y = (v) => (v / 50 * h).toFixed(1);
+    fPlane.style.offsetPath = `path("M${x(4)} ${y(46)} Q${x(100)} ${y(-14)} ${x(196)} ${y(46)}")`;
+  };
+  fitPlanePath();
+  addEventListener('resize', fitPlanePath);
   const setFlight = () => {
     const [code, time] = flights[fCity.value];
     $('#flight-code').textContent = code;
