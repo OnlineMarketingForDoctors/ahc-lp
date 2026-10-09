@@ -266,52 +266,78 @@
     if (r) r.checked = true;
   }));
 
-  /* ---------- Before & after gallery ---------- */
-  // Graft, hair and month figures are placeholders until the clinic supplies case data.
+  /* ---------- Before & after gallery (hair transplant only) ---------- */
+  // Graft counts are from the clinic's results page; cases without a published count show none.
   const cases = [
-    { f: 'hair-transplant-085-a', k: 'hair', label: 'FUE hair transplant', g: '3,800', h: '8,900', m: '12 months' },
-    { f: 'hair-transplant-042-a', k: 'hair', label: 'FUE hair transplant', g: '3,500', h: '8,100', m: '12 months' },
-    { f: 'hair-transplant-037-a', k: 'hair', label: 'Hairline restoration', g: '2,400', h: '5,300', m: '10 months' },
-    { f: 'hair-transplant-089-c', k: 'hair', label: 'FUE hair transplant', g: '4,200', h: '9,800', m: '14 months' },
-    { f: 'hair-transplant-107-a', k: 'hair', label: 'Crown restoration', g: '4,500', h: '10,400', m: '15 months' },
-    { f: 'hair-transplant-126-e', k: 'hair', label: 'FUE hair transplant', g: '3,600', h: '8,300', m: '12 months' },
-    { f: 'beard-transplant-009-d', k: 'beard', label: 'FUE beard transplant', g: '2,200', h: '4,100', m: '9 months' },
-    { f: 'eyebrow-transplant-004-a', k: 'eyebrow', label: 'FUE eyebrow transplant', g: '450', h: '650', m: '8 months' },
-    { f: 'hair-transplant-090-a', k: 'hair', label: 'Crown restoration', g: '3,000', h: '6,900', m: '12 months' },
+    { f: 'hair-transplant-085-a', n: '085' },
+    { f: 'hair-transplant-118', n: '118', g: '4,407' },
+    { f: 'hair-transplant-042-a', n: '042', g: '1,850' },
+    { f: 'hair-transplant-122-a', n: '122', g: '4,484' },
+    { f: 'hair-transplant-107-a', n: '107' },
+    { f: 'hair-transplant-128-a', n: '128', g: '4,267' },
+    { f: 'hair-transplant-037-a', n: '037', g: '3,150' },
+    { f: 'hair-transplant-123', n: '123', g: '2,543' },
+    { f: 'hair-transplant-089-c', n: '089' },
+    { f: 'hair-transplant-121-a', n: '121', g: '2,278' },
+    { f: 'hair-transplant-126-e', n: '126', g: '2,318' },
+    { f: 'hair-transplant-124-a', n: '124', g: '2,288' },
+    { f: 'unshaven-fue-006', n: '006', g: '1,656', label: 'Unshaven FUE hair transplant' },
+    { f: 'hair-transplant-125-a', n: '125', g: '2,304' },
+    { f: 'hair-transplant-120', n: '120', g: '1,831' },
+    { f: 'hair-transplant-090-a', n: '090' },
+    { f: 'hair-transplant-119', n: '119', g: '1,029' },
   ];
   const thumbs = $('#ba-thumbs');
-  thumbs.innerHTML = cases.map((c, i) => `
-    <li data-kind="${c.k}"><button type="button" aria-pressed="${i === 0}" data-i="${i}" aria-label="Show ${c.label} case">
-      <img src="${A}/img/ba/${c.f}.webp" alt="" loading="lazy" width="1000" height="625"><span class="t-label">${c.label}</span>
-    </button></li>`).join('');
   const baMain = $('#ba-main');
-  const showCase = (i) => {
-    const c = cases[i];
-    $$('button', thumbs).forEach((b) => b.setAttribute('aria-pressed', b.dataset.i == i));
+  const label = (c) => c.label || 'FUE hair transplant';
+  thumbs.innerHTML = cases.map((c, i) => `
+    <li><button type="button" aria-pressed="${i === 0}" data-i="${i}" aria-label="Show case ${c.n}${c.g ? `, ${c.g} grafts` : ''}">
+      <img src="${A}/img/ba/${c.f}.webp" alt="" loading="lazy" width="800" height="500"><span class="t-label">${c.g ? `${c.g} grafts` : `Case ${c.n}`}</span>
+    </button></li>`).join('');
+  let baCur = 0;
+  const showCase = (i, fromThumb) => {
+    baCur = (i + cases.length) % cases.length;
+    const c = cases[baCur];
+    const btns = $$('button', thumbs);
+    btns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.i == baCur));
+    // Keep the active thumbnail in view inside the scrolling panel without moving the page
+    if (!fromThumb) {
+      // The panel scrolls down on desktop and sideways on smaller screens
+      const t = btns[baCur].parentElement;
+      const wrap = thumbs.parentElement;
+      const sideways = wrap.scrollWidth > wrap.clientWidth;
+      const [pos, size, view, scroll] = sideways
+        ? [t.offsetLeft, t.offsetWidth, wrap.clientWidth, wrap.scrollLeft]
+        : [t.offsetTop, t.offsetHeight, wrap.clientHeight, wrap.scrollTop];
+      if (pos < scroll || pos + size > scroll + view) {
+        wrap.scrollTo({ [sideways ? 'left' : 'top']: pos - 8, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+    }
     baMain.classList.add('is-swapping');
     setTimeout(() => {
       baMain.src = `${A}/img/ba/${c.f}.webp`;
-      baMain.alt = `Before and after, ${c.label}`;
-      $('#ba-type').textContent = c.label;
-      $('#ba-grafts').textContent = c.g;
-      $('#ba-hairs').textContent = c.h;
-      $('#ba-months').textContent = c.m;
+      baMain.alt = `Before and after an ${label(c)}, case ${c.n}`;
+      $('#ba-type').textContent = label(c);
+      $('#ba-case').textContent = c.n;
+      $('#ba-grafts-row').hidden = !c.g;
+      $('#ba-grafts').textContent = c.g || '';
+      $('#ba-count').textContent = `${baCur + 1} / ${cases.length}`;
       const done = () => baMain.classList.remove('is-swapping');
       (baMain.decode ? baMain.decode() : Promise.resolve()).then(done, done);
     }, reduceMotion ? 0 : 260);
   };
-  thumbs.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) showCase(+b.dataset.i); });
-  $$('.filter button').forEach((btn) => btn.addEventListener('click', () => {
-    $$('.filter button').forEach((b) => b.setAttribute('aria-selected', b === btn));
-    const f = btn.dataset.filter;
-    let first = -1;
-    $$('li', thumbs).forEach((li, i) => {
-      const show = f === 'all' || li.dataset.kind === f;
-      li.hidden = !show;
-      if (show && first < 0) first = i;
-    });
-    if (first >= 0) showCase(first);
-  }));
+  thumbs.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) showCase(+b.dataset.i, true); });
+  $$('.ba-step').forEach((b) => b.addEventListener('click', () => showCase(baCur + +b.dataset.step)));
+  // Swipe on the main photo on touch screens
+  let tx = null;
+  baMain.parentElement.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  baMain.parentElement.addEventListener('touchend', (e) => {
+    if (tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) showCase(baCur + (dx < 0 ? 1 : -1));
+    tx = null;
+  });
+  showCase(0, true);
 
   /* ---------- Meet Dr Vekris: Read more ---------- */
   const meetBtn = $('.meet-toggle');
