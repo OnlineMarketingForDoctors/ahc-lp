@@ -267,32 +267,27 @@
   }));
 
   /* ---------- Before & after gallery (hair transplant only) ---------- */
-  // Graft counts are from the clinic's results page; cases without a published count show none.
+  // Cases, grafts, hairs and months are from the clinic's results page:
+  // advancedhairclinics.gr/en/hair-transplant-results-before-after
   const cases = [
-    { f: 'hair-transplant-085-a', n: '085' },
-    { f: 'hair-transplant-118', n: '118', g: '4,407' },
-    { f: 'hair-transplant-042-a', n: '042', g: '1,850' },
-    { f: 'hair-transplant-122-a', n: '122', g: '4,484' },
-    { f: 'hair-transplant-107-a', n: '107' },
-    { f: 'hair-transplant-128-a', n: '128', g: '4,267' },
-    { f: 'hair-transplant-037-a', n: '037', g: '3,150' },
-    { f: 'hair-transplant-123', n: '123', g: '2,543' },
-    { f: 'hair-transplant-089-c', n: '089' },
-    { f: 'hair-transplant-121-a', n: '121', g: '2,278' },
-    { f: 'hair-transplant-126-e', n: '126', g: '2,318' },
-    { f: 'hair-transplant-124-a', n: '124', g: '2,288' },
-    { f: 'unshaven-fue-006', n: '006', g: '1,656', label: 'Unshaven FUE hair transplant' },
-    { f: 'hair-transplant-125-a', n: '125', g: '2,304' },
-    { f: 'hair-transplant-120', n: '120', g: '1,831' },
-    { f: 'hair-transplant-090-a', n: '090' },
-    { f: 'hair-transplant-119', n: '119', g: '1,029' },
+    { f: 'hair-transplant-128-a', g: '4,267', h: '8,446', m: 15 },
+    { f: 'unshaven-fue-006', g: '1,656', h: '3,477', m: 12, label: 'Unshaven FUE hair transplant' },
+    { f: 'hair-transplant-126-e', g: '2,318', h: '4,103', m: 12 },
+    { f: 'hair-transplant-125-a', g: '2,304', h: '4,879', m: 12 },
+    { f: 'hair-transplant-124-a', g: '2,288', h: '4,983', m: 12 },
+    { f: 'hair-transplant-123', g: '2,543', h: '7,061', m: 6 },
+    { f: 'hair-transplant-122-a', g: '4,484', h: '8,396', m: 6 },
+    { f: 'hair-transplant-121-a', g: '2,278', h: '4,785', m: 12 },
+    { f: 'hair-transplant-120', g: '1,831', h: '4,487', m: 12 },
+    { f: 'hair-transplant-119', g: '1,029', h: '2,543', m: 3 },
+    { f: 'hair-transplant-118', g: '4,407', h: '9,300', m: 12 },
   ];
   const thumbs = $('#ba-thumbs');
   const baMain = $('#ba-main');
   const label = (c) => c.label || 'FUE hair transplant';
   thumbs.innerHTML = cases.map((c, i) => `
-    <li><button type="button" aria-pressed="${i === 0}" data-i="${i}" aria-label="Show case ${c.n}${c.g ? `, ${c.g} grafts` : ''}">
-      <img src="${A}/img/ba/${c.f}.webp" alt="" loading="lazy" width="800" height="500"><span class="t-label">${c.g ? `${c.g} grafts` : `Case ${c.n}`}</span>
+    <li><button type="button" aria-pressed="${i === 0}" data-i="${i}" aria-label="Show ${label(c)}, ${c.g} grafts">
+      <img src="${A}/img/ba/${c.f}.webp" alt="" loading="lazy" width="800" height="500"><span class="t-label">${c.g} grafts</span>
     </button></li>`).join('');
   let baCur = 0;
   const showCase = (i, fromThumb) => {
@@ -316,11 +311,11 @@
     baMain.classList.add('is-swapping');
     setTimeout(() => {
       baMain.src = `${A}/img/ba/${c.f}.webp`;
-      baMain.alt = `Before and after an ${label(c)}, case ${c.n}`;
+      baMain.alt = `Before and after an ${label(c)} with ${c.g} grafts`;
       $('#ba-type').textContent = label(c);
-      $('#ba-case').textContent = c.n;
-      $('#ba-grafts-row').hidden = !c.g;
-      $('#ba-grafts').textContent = c.g || '';
+      $('#ba-grafts').textContent = c.g;
+      $('#ba-hairs').textContent = c.h;
+      $('#ba-months').textContent = `${c.m} months`;
       $('#ba-count').textContent = `${baCur + 1} / ${cases.length}`;
       const done = () => baMain.classList.remove('is-swapping');
       (baMain.decode ? baMain.decode() : Promise.resolve()).then(done, done);

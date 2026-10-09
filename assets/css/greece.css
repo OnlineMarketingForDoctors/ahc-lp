@@ -236,7 +236,6 @@
   font-weight: 800; font-size: 13px; color: #fff; background: rgba(25,13,48,.72);
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
-.ba-caption dl > div[hidden] { display: none; }
 /* The panel takes the height of the main photo and scrolls inside it */
 .ba-thumbs-wrap {
   position: relative; min-height: 0;
