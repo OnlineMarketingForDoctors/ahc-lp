@@ -417,9 +417,6 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .powered img { width: 18px; height: 18px; }
 .powered a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-/* Back to top sits in the bottom right corner, WhatsApp above it */
-.to-top { bottom: 24px; }
-.float-wa { bottom: 92px; }
 
 /* ==========================================================
    RESPONSIVE
@@ -481,6 +478,4 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 
   .ef-fields { grid-template-columns: 1fr; }
   .ef-submit { justify-self: stretch; }
-  .float-wa { bottom: 80px; }
-  .to-top { bottom: 16px; }
 }
