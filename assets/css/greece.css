@@ -553,5 +553,13 @@ body.lb-open { overflow: hidden; }
   .meet-tag strong { font-size: 15.5px; }
   .meet-tag span { font-size: 12px; line-height: 1.4; }
   .lb-stage { grid-template-columns: minmax(0, 1fr); }
-  .lb-stage .lb-btn { display: none; }
+  /* Arrows sit over the photo's edges so it keeps the full width */
+  .lb-stage .lb-btn {
+    position: absolute; top: 50%; z-index: 2; transform: translateY(-50%);
+    width: 42px; height: 42px;
+    background: rgba(25,13,48,.72); border-color: rgba(255,255,255,.45);
+    box-shadow: 0 8px 20px -8px rgba(0,0,0,.6);
+  }
+  .lb-stage .lb-btn[data-step="-1"] { left: 8px; }
+  .lb-stage .lb-btn[data-step="1"] { right: 8px; }
 }
