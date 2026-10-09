@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/", "destination": "/hair-transplant-greece/", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/(.*)",

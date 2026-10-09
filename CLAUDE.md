@@ -15,3 +15,13 @@ Noindex is enforced in three places. Keep all three in place unless the owner ex
 
 Do **not** add `Disallow: /` to `robots.txt`. Blocking crawling stops search engines from seeing the
 noindex signals above, and blocked URLs can still appear in results if linked from elsewhere.
+
+## Structure
+
+Static HTML, CSS and JS, no build step. Pages live in their own folders (`/hair-transplant-greece/index.html`)
+and share `/assets` by absolute path.
+
+- `assets/css/base.css` is the homepage stylesheet from the `advanced-hair-clinics` repo, trimmed to the
+  sections reused here. Page-specific styles go in their own file (`assets/css/greece.css`).
+- Images are WebP. Generated images for this site are in `assets/img/greece/`, with an `-sm` version for mobile.
+- Copy is British English with no em dashes.
