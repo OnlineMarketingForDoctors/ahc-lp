@@ -28,9 +28,9 @@
 
     <nav class="main-nav" aria-label="Main">
       <ul>
+        <li><a href="#results">Results</a></li>
         <li><a href="#why-vekris">Why Dr Vekris</a></li>
         <li><a href="#packages">Packages</a></li>
-        <li><a href="#results">Results</a></li>
         <li><a href="#dr-vekris">Dr Vekris</a></li>
         <li><a href="#journey">Your trip</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -55,9 +55,9 @@
 
 <div class="mobile-menu" id="mobile-menu" hidden>
   <nav aria-label="Mobile">
+    <a href="#results">Results</a>
     <a href="#why-vekris">Why Dr Vekris</a>
     <a href="#packages">Packages</a>
-    <a href="#results">Results</a>
     <a href="#dr-vekris">Dr Vekris</a>
     <a href="#journey">Your trip</a>
     <a href="#faq">FAQ</a>
@@ -195,6 +195,38 @@
   </div>
 </section>
 
+<!-- ============ BEFORE & AFTER ============ -->
+<section class="results" id="results" aria-labelledby="results-title">
+  <div class="results-head">
+    <div>
+      <p class="kicker results-eyebrow">Real patients, real results</p>
+      <h2 id="results-title" class="h2">Natural results that speak for themselves</h2>
+    </div>
+    <div class="filter" role="tablist" aria-label="Filter results">
+      <button role="tab" aria-selected="true" data-filter="all">All</button>
+      <button role="tab" aria-selected="false" data-filter="hair">Hair</button>
+      <button role="tab" aria-selected="false" data-filter="beard">Beard</button>
+      <button role="tab" aria-selected="false" data-filter="eyebrow">Eyebrow</button>
+    </div>
+  </div>
+  <div class="results-grid">
+    <figure class="ba-feature">
+      <div class="ba-frame">
+        <img id="ba-main" src="/assets/img/ba/hair-transplant-085-a.webp" alt="Before and after FUE hair transplant" width="1000" height="625">
+      </div>
+      <figcaption class="ba-caption">
+        <span class="ba-type" id="ba-type">FUE hair transplant</span>
+        <dl>
+          <div><dt>Grafts</dt><dd id="ba-grafts">3,800</dd></div>
+          <div><dt>Hairs</dt><dd id="ba-hairs">8,900</dd></div>
+          <div><dt>Post-procedure</dt><dd id="ba-months">12 months</dd></div>
+        </dl>
+      </figcaption>
+    </figure>
+    <ul class="ba-thumbs" id="ba-thumbs"></ul>
+  </div>
+</section>
+
 <!-- ============ WHY DR VEKRIS (tabs + video) ============ -->
 <section class="why" id="why-vekris" aria-labelledby="why-title">
   <div class="why-head">
@@ -323,52 +355,6 @@
     </div>
   </details>
   <p class="pk-note">Prices are indicative and confirmed in writing after your consultation. A hair transplant is charged per session, so you never pay extra for the number of grafts you need.</p>
-</section>
-
-<!-- ============ BEFORE & AFTER ============ -->
-<section class="results" id="results" aria-labelledby="results-title">
-  <div class="results-head">
-    <div>
-      <p class="kicker results-eyebrow">Real patients, real results</p>
-      <h2 id="results-title" class="h2">Natural results that speak for themselves</h2>
-    </div>
-    <div class="filter" role="tablist" aria-label="Filter results">
-      <button role="tab" aria-selected="true" data-filter="all">All</button>
-      <button role="tab" aria-selected="false" data-filter="hair">Hair</button>
-      <button role="tab" aria-selected="false" data-filter="beard">Beard</button>
-      <button role="tab" aria-selected="false" data-filter="eyebrow">Eyebrow</button>
-    </div>
-  </div>
-  <div class="results-grid">
-    <figure class="ba-feature">
-      <div class="ba-frame">
-        <img id="ba-main" src="/assets/img/ba/hair-transplant-085-a.webp" alt="Before and after FUE hair transplant" width="1000" height="625">
-      </div>
-      <figcaption class="ba-caption">
-        <span class="ba-type" id="ba-type">FUE hair transplant</span>
-        <dl>
-          <div><dt>Grafts</dt><dd id="ba-grafts">3,800</dd></div>
-          <div><dt>Hairs</dt><dd id="ba-hairs">8,900</dd></div>
-          <div><dt>Post-procedure</dt><dd id="ba-months">12 months</dd></div>
-        </dl>
-      </figcaption>
-    </figure>
-    <div class="results-side">
-      <ul class="ba-thumbs" id="ba-thumbs"></ul>
-      <div class="hero-ba" aria-label="Drag to compare a before and after">
-        <div class="hba-stage" style="--pos: 50%">
-          <img class="hba-after" src="/assets/img/ba-split/hair-transplant-085-a-after.webp" alt="After an FUE hair transplant" width="382" height="380" loading="lazy">
-          <img class="hba-before" src="/assets/img/ba-split/hair-transplant-085-a-before.webp" alt="Before an FUE hair transplant" width="382" height="380" loading="lazy">
-          <span class="hba-handle" aria-hidden="true"></span>
-          <input class="hba-range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
-        </div>
-        <div class="hba-foot">
-          <p class="hba-caption"><strong>Drag to compare</strong> <span id="hba-meta">3,800 grafts, 12 months</span></p>
-          <div class="hba-dots" role="group" aria-label="Choose a case"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- ============ MEET DR VEKRIS ============ -->

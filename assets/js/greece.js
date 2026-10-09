@@ -313,66 +313,6 @@
     if (first >= 0) showCase(first);
   }));
 
-  /* ---------- Drag-to-compare slider (starts when it scrolls into view) ---------- */
-  const splitCases = [
-    { f: 'hair-transplant-085-a', meta: '3,800 grafts, 12 months' },
-    { f: 'hair-transplant-042-a', meta: '3,500 grafts, 12 months' },
-    { f: 'hair-transplant-107-a', meta: '4,500 grafts, 15 months' },
-    { f: 'hair-transplant-089-c', meta: '4,200 grafts, 14 months' },
-  ];
-  const hba = $('.hero-ba');
-  if (hba) {
-    const stage = $('.hba-stage', hba);
-    const range = $('.hba-range', hba);
-    const imgB = $('.hba-before', hba);
-    const imgA = $('.hba-after', hba);
-    const dots = $('.hba-dots', hba);
-    let hIdx = 0, hTimer, sweepRaf, touched = false;
-    const setPos = (v) => { stage.style.setProperty('--pos', `${v}%`); range.value = v; };
-    range.addEventListener('input', () => {
-      touched = true; cancelAnimationFrame(sweepRaf); clearInterval(hTimer);
-      stage.style.setProperty('--pos', `${range.value}%`);
-    });
-    const sweep = () => {
-      if (reduceMotion || touched) return;
-      const t0 = performance.now();
-      const step = (t) => {
-        const p = Math.min(1, (t - t0) / 2600);
-        setPos(50 + 35 * Math.sin(p * Math.PI * 2));
-        if (p < 1) sweepRaf = requestAnimationFrame(step); else setPos(50);
-      };
-      sweepRaf = requestAnimationFrame(step);
-    };
-    dots.innerHTML = splitCases.map((c, i) => `<button type="button" aria-pressed="${i === 0}" aria-label="Case ${i + 1}" data-i="${i}"></button>`).join('');
-    const showSplit = (i) => {
-      hIdx = i;
-      $$('button', dots).forEach((b) => b.setAttribute('aria-pressed', b.dataset.i == i));
-      const c = splitCases[i];
-      stage.classList.add('is-swapping');
-      setTimeout(() => {
-        imgB.src = `${A}/img/ba-split/${c.f}-before.webp`;
-        imgA.src = `${A}/img/ba-split/${c.f}-after.webp`;
-        $('#hba-meta').textContent = c.meta;
-        setPos(50);
-        Promise.all([imgA, imgB].map((im) => (im.decode ? im.decode() : Promise.resolve()).catch(() => {})))
-          .then(() => { stage.classList.remove('is-swapping'); sweep(); });
-      }, reduceMotion ? 0 : 350);
-    };
-    dots.addEventListener('click', (e) => {
-      const b = e.target.closest('button');
-      if (!b) return;
-      touched = true; clearInterval(hTimer); cancelAnimationFrame(sweepRaf);
-      showSplit(+b.dataset.i);
-    });
-    const hIO = new IntersectionObserver(([en]) => {
-      if (!en.isIntersecting) return;
-      hIO.disconnect();
-      sweep();
-      if (!reduceMotion) hTimer = setInterval(() => { if (!touched) showSplit((hIdx + 1) % splitCases.length); }, 7000);
-    }, { threshold: 0.6 });
-    hIO.observe(stage);
-  }
-
   /* ---------- Meet Dr Vekris: Read more ---------- */
   const meetBtn = $('.meet-toggle');
   meetBtn.addEventListener('click', () => {

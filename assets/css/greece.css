@@ -214,18 +214,6 @@
 .pk-note { margin-top: 18px; font-size: 14px; color: var(--slate); max-width: 60em; }
 
 /* ==========================================================
-   RESULTS: side column holds the thumbs and the drag slider
-   ========================================================== */
-.results { padding-top: 0; }
-.results-grid { align-items: center; }
-.results-side { display: grid; gap: 22px; }
-.results-side .hero-ba {
-  position: relative; right: auto; bottom: auto; width: 100%; max-width: 420px;
-  opacity: 1; transform: none; transition: none;
-  background: var(--grad-ink); border: 0; box-shadow: var(--shadow-lg);
-}
-
-/* ==========================================================
    MEET: tag copy is shorter here
    ========================================================== */
 .meet-text .btn { white-space: normal; text-align: center; }
@@ -437,7 +425,6 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
   .pk-media { aspect-ratio: 4 / 3; }
   .pk-vip .pk-media { aspect-ratio: 4 / 3.4; }
 
-  .results-side .hero-ba { max-width: none; }
 
   .faq-list summary { font-size: 15.5px; padding: 16px 16px 16px 18px; }
   .faq-list details p { padding: 0 18px 18px; }
