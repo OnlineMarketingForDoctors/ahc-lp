@@ -455,6 +455,56 @@
   vtList.innerHTML = vids.map((v, i) => `<li><button type="button" data-i="${i}" aria-current="${i === 0}">
     <span class="vt-thumb"><img src="${vSrc(v)}" alt="" loading="lazy" width="640" height="360"></span>
     <span><strong>${v.name}</strong><span>${v.g} grafts</span></span></button></li>`).join('');
+  // English captions: use an English track when the video has one, otherwise ask the player to
+  // auto-translate the video's own captions into English (YouTube's Auto-translate option).
+  // The translation call is not in YouTube's documented API, so every step falls back safely:
+  // if the player script never loads, the plain embed plays with captions on.
+  const ytParams = 'autoplay=1&rel=0&modestbranding=1&cc_load_policy=1&cc_lang_pref=en&hl=en';
+  const plainEmbed = (v) => `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?${ytParams}" title="${v.name}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  let ytApi;
+  const loadYT = () => ytApi || (ytApi = new Promise((res, rej) => {
+    if (window.YT && window.YT.Player) return res();
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => { if (prev) prev(); res(); };
+    const sc = document.createElement('script');
+    sc.src = 'https://www.youtube.com/iframe_api';
+    sc.onerror = rej;
+    document.head.appendChild(sc);
+    setTimeout(rej, 5000);
+  }));
+  const captionsToEnglish = (player) => {
+    try {
+      const list = player.getOption('captions', 'tracklist') || [];
+      if (!list.length) return false;
+      const en = list.find((t) => /^en/i.test(t.languageCode));
+      player.setOption('captions', 'track', en
+        ? { languageCode: en.languageCode }
+        : { languageCode: list[0].languageCode, translationLanguage: { languageCode: 'en', languageName: 'English' } });
+      return true;
+    } catch (e) { return false; }
+  };
+  let vtToken = 0;
+  const playWithEnglishCaptions = (v) => {
+    const token = ++vtToken;
+    vtPlayer.innerHTML = '<div id="vt-yt"></div>';
+    loadYT().then(() => {
+      if (token !== vtToken) return; // another video was chosen meanwhile
+      let done = false;
+      const tryEnglish = (p) => { if (!done) done = captionsToEnglish(p); };
+      new window.YT.Player('vt-yt', {
+        host: 'https://www.youtube-nocookie.com',
+        videoId: v.id,
+        width: '100%', height: '100%',
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, cc_load_policy: 1, cc_lang_pref: 'en', hl: 'en', playsinline: 1 },
+        events: {
+          onReady: (e) => { e.target.getIframe().title = v.name; e.target.playVideo(); },
+          // The captions module reports its tracks once it loads
+          onApiChange: (e) => tryEnglish(e.target),
+          onStateChange: (e) => { if (e.data === 1) { tryEnglish(e.target); setTimeout(() => tryEnglish(e.target), 1500); } },
+        },
+      });
+    }).catch(() => { if (token === vtToken) vtPlayer.innerHTML = plainEmbed(v); });
+  };
   const showVid = (i, play) => {
     vCur = i;
     const v = vids[i];
@@ -463,7 +513,7 @@
     $('#vt-stats').innerHTML = [['Treatment', v.t], ['Grafts', v.g], ['Hairs', v.h], ['Treatment days', v.d]]
       .map(([k, val]) => `<div><dt>${k}</dt><dd>${val}</dd></div>`).join('');
     if (play) {
-      vtPlayer.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1&cc_load_policy=1&cc_lang_pref=en&hl=en" title="${v.name}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+      playWithEnglishCaptions(v);
       return;
     }
     vtPlayer.innerHTML = `<button type="button" class="vt-poster" aria-label="Play video: ${v.name}"><img src="${vSrc(v)}" alt="${v.name}" width="1600" height="900" loading="lazy"><span class="vt-play" aria-hidden="true"></span></button>`;
@@ -472,6 +522,7 @@
   vtList.addEventListener('click', (e) => {
     const b = e.target.closest('button');
     if (!b) return;
+    vtToken++;
     showVid(+b.dataset.i, false);
     if (innerWidth <= 1120) vtPlayer.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
   });
