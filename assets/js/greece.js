@@ -595,6 +595,7 @@
     'ef-email': (el) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(el.value.trim()),
     'ef-phone': (el) => el.value.replace(/[^\d]/g, '').length >= 8,
     'ef-country': (el) => !!el.value,
+    'ef-source': (el) => !!el.value,
     'ef-consent': (el) => el.checked,
   };
   const check = (id) => {
@@ -623,16 +624,6 @@
     done.hidden = false;
     done.focus();
   });
-  const photos = $('#ef-photos');
-  const drop = photos.closest('.file-drop');
-  const hint = $('#ef-photos-hint');
-  const hintText = hint.textContent;
-  photos.addEventListener('change', () => {
-    const n = photos.files.length;
-    hint.textContent = n ? `${n} photo${n > 1 ? 's' : ''} added: ${[...photos.files].map((f) => f.name).join(', ')}` : hintText;
-  });
-  ['dragenter', 'dragover'].forEach((t) => drop.addEventListener(t, () => drop.classList.add('is-over')));
-  ['dragleave', 'drop'].forEach((t) => drop.addEventListener(t, () => drop.classList.remove('is-over')));
 
   /* ---------- Editorial image reveal + gentle parallax ---------- */
   if (!reduceMotion) {

@@ -524,7 +524,7 @@
       <h2 id="enquiry-title" class="display">Request your consultation with Dr Vekris</h2>
       <p>Tell us about your hair loss and where you would travel from. A member of our international team replies within one working day to arrange your consultation and dates.</p>
       <ul class="enquiry-points">
-        <li>A doctor reviews your photos</li>
+        <li>A doctor reviews your case</li>
         <li>Personal plan and starting price</li>
         <li>No obligation to book</li>
       </ul>
@@ -566,15 +566,25 @@
         </div>
         <input type="hidden" name="package" value="vekris-signature">
         <div class="field field-wide">
-          <label for="ef-message">Tell us about your hair loss <span class="opt">(optional)</span></label>
-          <textarea id="ef-message" name="message" rows="3" placeholder="For example: receding at the temples for five years, thinning at the crown, no previous transplant."></textarea>
+          <label for="ef-source">How did you hear about us?</label>
+          <select id="ef-source" name="source" required>
+            <option value="">Choose an option</option>
+            <option>Search Engines (Google, Bing, Yahoo)</option>
+            <option>Social media (Facebook, Instagram, TikTok)</option>
+            <option>From a friend or family member</option>
+            <option>From another doctor</option>
+            <option>Newsletter</option>
+            <option>Text message</option>
+            <option>Influencer</option>
+            <option>Radio (incl. podcasts)</option>
+            <option>AI chats (ChatGPT, Gemini, Perplexity)</option>
+            <option>Other</option>
+          </select>
+          <p class="field-error" id="ef-source-err" hidden>Choose how you heard about us.</p>
         </div>
         <div class="field field-wide">
-          <label class="file-drop" for="ef-photos">
-            <input id="ef-photos" name="photos" type="file" accept="image/*" multiple>
-            <span class="fd-title">Add photos of your hair <span class="opt">(optional)</span></span>
-            <span class="fd-hint" id="ef-photos-hint">Front, top, crown and back of your head. A doctor uses them to plan your grafts.</span>
-          </label>
+          <label for="ef-message">Tell us about your hair loss <span class="opt">(optional)</span></label>
+          <textarea id="ef-message" name="message" rows="3" placeholder="For example: receding at the temples for five years, thinning at the crown, no previous transplant."></textarea>
         </div>
         <div class="field field-wide">
           <label class="consent"><input id="ef-consent" type="checkbox" name="consent" required><span>I agree that Advanced Hair Clinics may contact me about my enquiry and store my details in line with its privacy policy.</span></label>
@@ -584,7 +594,7 @@
       <button class="btn btn-teal btn-lg ef-submit" type="submit">Request my consultation</button>
       <div class="ef-done" id="ef-done" hidden tabindex="-1">
         <h3>Enquiry sent</h3>
-        <p>Thank you. A member of our international team will reply within one working day to arrange your consultation with Dr Vekris. If you added no photos, they will ask for a few so your treatment can be planned.</p>
+        <p>Thank you. A member of our international team will reply within one working day to arrange your consultation with Dr Vekris. They may ask for a few photos of your hair so your treatment can be planned.</p>
       </div>
     </form>
   </div>
