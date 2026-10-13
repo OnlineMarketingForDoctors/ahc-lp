@@ -24,7 +24,7 @@
   box-shadow: 0 30px 60px -24px rgba(0,0,0,.8);
 }
 .sm-badge {
-  position: absolute; left: -18px; top: 9%; max-width: 230px;
+  position: absolute; left: -18px; bottom: 30%; max-width: 230px;
   display: grid; gap: 4px; padding: 16px 18px; border-radius: var(--r-md);
   background: var(--grad-teal); color: #fff;
   box-shadow: 0 24px 50px -20px rgba(17,163,182,.7);
