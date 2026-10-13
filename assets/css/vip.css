@@ -92,3 +92,8 @@
 @media (max-width: 760px) {
   .vip .btn { white-space: normal; text-align: center; }
 }
+
+/* The VIP headline is longer: a slightly smaller size keeps each phrase on one line on desktop,
+   and balanced wrapping avoids a lone word when a phrase has to wrap on phones */
+.vip .gr-hero .hero-title { font-size: clamp(34px, 3.75vw, 54px); }
+.vip .hero-title .line > span { text-wrap: balance; }
