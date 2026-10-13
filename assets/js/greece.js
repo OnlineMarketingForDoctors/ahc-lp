@@ -156,7 +156,9 @@
         'He is the only doctor to have performed hair transplant surgery in 17 countries, and he openly presents the results of his clinic to the most demanding scientific audiences, including the ISHRS World Congress.'] },
     { t: 'Exclusively by doctors, from start to finish', media: 'timelapse',
       p: ['At Advanced Hair Clinics a hair transplant is treated as what it is: a medical procedure. Local anaesthesia, extraction and implantation are performed only by doctors, never delegated to technicians.',
-        'Every doctor on the team was trained by Dr Vekris and works to the planning and hairline standards he created, so the same care goes into every graft whichever package you choose.'] },
+        document.body.classList.contains('vip')
+          ? 'With the Vekris Signature, Dr Vekris performs your procedure himself, supported by the doctors and nurses he has trained to his own standards.'
+          : 'Every doctor on the team was trained by Dr Vekris and works to the planning and hairline standards he created, so the same care goes into every graft whichever package you choose.'] },
     { t: 'Direct implantation with the Sharp Implanter', media: 'sharp-implanter',
       p: ['Grafts are placed in one step with the Sharp Implanter, without first opening holes in the recipient area. Its tip is less than 1 mm wide, for precise placement at the angle and direction of your natural hair growth.'],
       l: ['Less trauma to the scalp and a lower chance of swelling after the procedure', 'Grafts are handled gently, which supports their survival and growth', 'Natural density, with single-hair grafts along the hairline'] },

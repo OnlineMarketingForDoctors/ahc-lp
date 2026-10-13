@@ -1,0 +1,94 @@
+/* ==========================================================
+   VIP hair transplant · layer on top of base.css and greece.css
+   ========================================================== */
+
+/* ---------- The Vekris Signature: the single offer ---------- */
+.sig {
+  position: relative; color: #fff; overflow: hidden;
+  background:
+    radial-gradient(45% 60% at 12% 30%, rgba(17,163,182,.22), transparent 70%),
+    radial-gradient(40% 55% at 90% 80%, rgba(120,72,200,.28), transparent 70%),
+    var(--ink);
+}
+.sig-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: clamp(90px, 10vw, 150px) var(--gutter);
+  display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+  gap: clamp(40px, 6vw, 100px); align-items: center;
+}
+.sig-media { position: relative; padding: 0 12% 18% 0; }
+.sm-main { width: 100%; height: auto; aspect-ratio: 4 / 4.4; object-fit: cover; object-position: 50% 15%; border-radius: var(--r-lg); box-shadow: 0 50px 100px -40px rgba(0,0,0,.8); }
+.sm-sat {
+  position: absolute; right: 0; bottom: 0; width: 58%; height: auto; aspect-ratio: 16 / 10; object-fit: cover;
+  border-radius: var(--r-md); border: 8px solid var(--ink);
+  box-shadow: 0 30px 60px -24px rgba(0,0,0,.8);
+}
+.sm-badge {
+  position: absolute; left: -18px; top: 9%; max-width: 230px;
+  display: grid; gap: 4px; padding: 16px 18px; border-radius: var(--r-md);
+  background: var(--grad-teal); color: #fff;
+  box-shadow: 0 24px 50px -20px rgba(17,163,182,.7);
+}
+.sm-badge strong { font-family: var(--display); font-weight: 600; font-size: 21px; letter-spacing: -0.02em; line-height: 1.1; }
+.sm-badge span { font-size: 13.5px; line-height: 1.4; }
+
+.sig-text { display: grid; gap: 22px; justify-items: start; }
+.sig-text .h2 { max-width: 15em; }
+.sig-lead { font-size: clamp(17px, 1.3vw, 19px); color: #E4DEF2; max-width: 34em; }
+
+/* The three steps really are a sequence, so they are numbered */
+.sig-steps { counter-reset: sig; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; }
+.sig-steps li {
+  counter-increment: sig; position: relative;
+  padding: 54px 18px 18px; border-radius: var(--r-md);
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.sig-steps li::before {
+  content: counter(sig); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  font-weight: 800; font-size: 14px; background: var(--grad-teal);
+}
+.sig-steps h3 { font-size: 16.5px; font-weight: 800; line-height: 1.3; }
+.sig-steps p { margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--lilac); }
+
+.sig-also { width: 100%; border-top: 1px solid var(--ink-3); padding-top: 20px; }
+.sig-also h3 { font-size: 15px; font-weight: 800; margin-bottom: 12px; color: #fff; }
+.sig-also ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
+.sig-also li { position: relative; padding-left: 30px; font-size: 15px; line-height: 1.5; color: #E8E3F3; }
+.sig-also li::before {
+  content: ""; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+.sig-price { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 30px; margin-top: 6px; }
+.sp-amount { font-family: var(--display); font-weight: 600; font-size: clamp(34px, 3.4vw, 50px); letter-spacing: -0.03em; line-height: 1; color: var(--teal-soft); }
+.sp-amount span { font-family: var(--sans); font-size: 16px; font-weight: 700; letter-spacing: 0; color: var(--lilac); margin-right: 6px; }
+.sig-note { font-size: 13.5px; color: var(--lilac); max-width: 46em; }
+
+/* The offer comes straight after the overlapping authority card, so it needs room above */
+.sig { margin-top: clamp(80px, 9vw, 140px); }
+
+@media (max-width: 1120px) {
+  .sig-inner { grid-template-columns: 1fr; }
+  .sig-media { max-width: 560px; width: 100%; }
+}
+@media (max-width: 760px) {
+  .sig-media { padding: 0 10% 16% 0; }
+  .sm-badge { left: -6px; max-width: 190px; padding: 12px 14px; }
+  .sm-badge strong { font-size: 18px; }
+  .sig-steps { grid-template-columns: 1fr; }
+  .sig-steps li { padding: 16px 16px 16px 58px; }
+  .sig-also ul { grid-template-columns: 1fr; }
+  .sig-price .btn { width: 100%; white-space: normal; text-align: center; }
+  /* The header button text is longer on this page */
+  .site-header.is-scrolled .header-book-mobile { font-size: 11.5px; padding: 11px 14px; }
+}
+
+/* Reviews follow the white results band directly here */
+.vip .reviews { margin-top: 0; }
+
+/* Longer button labels on this page: let them wrap on phones rather than widen the layout */
+@media (max-width: 760px) {
+  .vip .btn { white-space: normal; text-align: center; }
+}

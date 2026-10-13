@@ -21,6 +21,9 @@ noindex signals above, and blocked URLs can still appear in results if linked fr
 Static HTML, CSS and JS, no build step. Pages live in their own folders (`/hair-transplant-greece/index.html`)
 and share `/assets` by absolute path.
 
+- Pages: `/hair-transplant-greece/` (both packages) and `/vip-hair-transplant/` (Vekris Signature only).
+  They share `assets/js/greece.js`; the VIP page adds `assets/css/vip.css` and `body.vip`, which the script
+  checks for the little copy that differs.
 - `assets/css/base.css` is the homepage stylesheet from the `advanced-hair-clinics` repo, trimmed to the
   sections reused here. Page-specific styles go in their own file (`assets/css/greece.css`).
 - Images are WebP. Generated images for this site are in `assets/img/greece/`, with an `-sm` version for mobile.
