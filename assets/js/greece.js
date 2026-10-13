@@ -171,8 +171,8 @@
       l: ['Better use of every available graft', 'A donor area preserved for any future needs', 'A clear picture of the result before you travel'] },
     { t: 'Experience with every hair type', media: 'afro-fue',
       p: ['Dr Vekris teaches Afro Hair FUE at international workshops and has in-depth knowledge of how hairline shape and hair quality differ between ethnic backgrounds. Patients with curly, Afro-textured or very fine hair travel to Athens for this expertise.'] },
-    { t: 'Care that continues after you fly home', media: 'aftercare',
-      p: ['Our surgeons, nurses and coordinators stay in touch for 12 months by video, phone and WhatsApp, checking that your new hair grows as expected and that you follow the conservative treatment that protects your result.',
+    { t: 'Support before, during and after your visit', media: 'aftercare',
+      p: ['From your first message to your post-operative review and beyond, our team supports you in English, French and German, by phone, email and WhatsApp.',
         'Patients who trust us become “our people”, and know they can reach us at any time with any question.'] },
   ];
   const WHY_DUR = 9000;
