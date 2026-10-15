@@ -69,6 +69,8 @@
 /* The offer comes straight after the overlapping authority card, so it needs room above */
 .sig { margin-top: clamp(80px, 9vw, 140px); }
 .results + .sig { margin-top: 0; }
+/* Review cards run along the bottom of the Signature section */
+.sig-reviews { position: relative; max-width: var(--max); margin: calc(-1 * clamp(40px, 5vw, 80px)) auto 0; padding: 0 var(--gutter) clamp(80px, 9vw, 130px); }
 
 @media (max-width: 1120px) {
   .sig-inner { grid-template-columns: 1fr; }
