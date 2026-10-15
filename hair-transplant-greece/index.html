@@ -18,7 +18,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,100..125,400..800;1,100..125,700..800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="/assets/video/greece-coast-poster.webp">
+<link rel="preload" as="image" href="/assets/video/timelapse-hero-poster.webp">
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/greece.css">
 </head>
@@ -86,19 +86,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <main id="main">
 
 <!-- ============ HERO ============ -->
-<!-- Until clinic walkthrough footage arrives: a Greece coast clip, then real photos of the Athens clinic. -->
-<section class="hero gr-hero" aria-label="Introduction">
-  <div class="hero-reel" aria-hidden="true">
-    <video class="reel-item is-on" muted playsinline preload="auto" poster="/assets/video/greece-coast-poster.webp" data-place="Greece" data-caption="The Greek coast">
-      <source src="/assets/video/greece-coast.mp4" type="video/mp4">
-    </video>
-    <img class="reel-item" src="/assets/img/clinic/athens-reception.webp" srcset="/assets/img/clinic/athens-reception-sm.webp 900w, /assets/img/clinic/athens-reception.webp 1920w" sizes="100vw" alt="" width="1920" height="1080" data-place="Our clinic in Athens" data-caption="Reception">
-    <img class="reel-item" src="/assets/img/clinic/athens-lounge.webp" srcset="/assets/img/clinic/athens-lounge-sm.webp 900w, /assets/img/clinic/athens-lounge.webp 1920w" sizes="100vw" alt="" width="1920" height="1080" data-place="Our clinic in Athens" data-caption="Patient lounge">
-    <img class="reel-item" src="/assets/img/clinic/athens-corridor.webp" srcset="/assets/img/clinic/athens-corridor-sm.webp 900w, /assets/img/clinic/athens-corridor.webp 1920w" sizes="100vw" alt="" width="1920" height="1080" data-place="Our clinic in Athens" data-caption="Consultation rooms">
-  </div>
-  <div class="hero-shade" aria-hidden="true"></div>
-  <p class="reel-caption" id="reel-caption" aria-hidden="true"><span>Greece</span> The Greek coast</p>
-
+<section class="hero gr-hero hero-split" aria-label="Introduction">
   <div class="hero-content">
     <h1 class="hero-eyebrow">Hair transplant in Greece</h1>
     <p class="hero-title">
@@ -128,41 +116,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <!-- Satellite card: how far Athens really is -->
-  <aside class="flight" aria-labelledby="flight-title">
-    <div class="flight-top">
-      <p class="flight-title" id="flight-title">How far is Athens from you?</p>
-      <label class="flight-select">
-        <span class="sr-only">Choose the city you would fly from</span>
-        <select id="flight-city">
-          <option value="london">London</option>
-          <option value="manchester">Manchester</option>
-          <option value="dublin">Dublin</option>
-          <option value="paris">Paris</option>
-          <option value="amsterdam">Amsterdam</option>
-          <option value="frankfurt">Frankfurt</option>
-          <option value="zurich">Zurich</option>
-          <option value="stockholm">Stockholm</option>
-          <option value="dubai">Dubai</option>
-          <option value="newyork">New York</option>
-          <option value="toronto">Toronto</option>
-        </select>
-      </label>
+  <!-- Right half: a timelapse of a procedure day, with Athens sights and the flight card around it -->
+  <div class="hero-stage">
+    <div class="hs-media">
+      <div class="hs-video">
+        <video autoplay muted loop playsinline preload="auto" poster="/assets/video/timelapse-hero-poster.webp" aria-hidden="true">
+          <source src="/assets/video/timelapse-hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <figure class="hs-sat hs-sat-a">
+        <img src="/assets/img/greece/sight-acropolis.webp" alt="The Parthenon on the Acropolis of Athens at golden hour" width="560" height="700">
+        <figcaption>The Acropolis</figcaption>
+      </figure>
+      <figure class="hs-sat hs-sat-b">
+        <img src="/assets/img/greece/sight-sounion.webp" alt="The Temple of Poseidon at Cape Sounion at sunset" width="560" height="700">
+        <figcaption>Cape Sounion</figcaption>
+      </figure>
     </div>
-    <div class="flight-route" aria-hidden="true">
-      <span class="fr-code" id="flight-code">LHR</span>
-      <span class="fr-track">
-        <svg class="fr-arc" viewBox="0 0 200 50" preserveAspectRatio="none"><path d="M4 46 Q100 -14 196 46"/></svg>
-        <svg class="fr-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
-      </span>
-      <span class="fr-code">ATH</span>
-    </div>
-    <dl class="flight-facts" aria-live="polite">
-      <div><dt>Direct flight, about</dt><dd id="flight-time">3 h 40 min</dd></div>
-      <div><dt>Time in Athens</dt><dd>2 to 3 days</dd></div>
-      <div><dt>Back at work</dt><dd>3 to 4 days</dd></div>
-    </dl>
-  </aside>
+    <aside class="flight" aria-labelledby="flight-title">
+      <div class="flight-top">
+        <p class="flight-title" id="flight-title">How far is Athens from you?</p>
+        <label class="flight-select">
+          <span class="sr-only">Choose the city you would fly from</span>
+          <select id="flight-city">
+            <option value="london">London</option>
+            <option value="manchester">Manchester</option>
+            <option value="dublin">Dublin</option>
+            <option value="paris">Paris</option>
+            <option value="amsterdam">Amsterdam</option>
+            <option value="frankfurt">Frankfurt</option>
+            <option value="zurich">Zurich</option>
+            <option value="stockholm">Stockholm</option>
+            <option value="dubai">Dubai</option>
+            <option value="newyork">New York</option>
+            <option value="toronto">Toronto</option>
+          </select>
+        </label>
+      </div>
+      <div class="flight-route" aria-hidden="true">
+        <span class="fr-code" id="flight-code">LHR</span>
+        <span class="fr-track">
+          <svg class="fr-arc" viewBox="0 0 200 50" preserveAspectRatio="none"><path d="M4 46 Q100 -14 196 46"/></svg>
+          <svg class="fr-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+        </span>
+        <span class="fr-code">ATH</span>
+      </div>
+      <dl class="flight-facts" aria-live="polite">
+        <div><dt>Direct flight, about</dt><dd id="flight-time">3 h 40 min</dd></div>
+        <div><dt>Time in Athens</dt><dd>2 to 3 days</dd></div>
+        <div><dt>Back at work</dt><dd>3 to 4 days</dd></div>
+      </dl>
+    </aside>
+  </div>
 </section>
 
 <!-- ============ WHY TRAVEL (overlapping) ============ -->

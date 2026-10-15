@@ -76,49 +76,6 @@
   if (!reduceMotion) { fRoute.classList.remove('is-flying'); setTimeout(() => fRoute.classList.add('is-flying'), 1900); }
   }
 
-  /* ---------- Hero reel (travel page): Greece clip, then photos of the clinic ---------- */
-  const reel = $('.hero-reel');
-  if (reel) {
-    const items = $$('.reel-item', reel);
-    const cap = $('#reel-caption');
-    const PHOTO = 5500;
-    let r = 0, rTimer, rVisible = true;
-    const setCaption = (el) => {
-      cap.classList.add('is-swapping');
-      setTimeout(() => {
-        cap.innerHTML = `<span>${el.dataset.place}</span> ${el.dataset.caption}`;
-        cap.classList.remove('is-swapping');
-      }, 300);
-    };
-    const next = () => show((r + 1) % items.length);
-    const run = () => {
-      clearTimeout(rTimer);
-      if (!rVisible) return;
-      const el = items[r];
-      if (el.tagName === 'VIDEO') el.play().catch(() => { rTimer = setTimeout(next, PHOTO); });
-      else rTimer = setTimeout(next, PHOTO);
-    };
-    const show = (i) => {
-      items[r].classList.remove('is-on');
-      r = i;
-      const el = items[r];
-      if (el.tagName === 'VIDEO') el.currentTime = 0;
-      // Restart the slow zoom on each photo
-      el.classList.remove('is-on'); void el.offsetWidth; el.classList.add('is-on');
-      setCaption(el);
-      run();
-    };
-    $('video', reel).addEventListener('ended', next);
-    if (!reduceMotion) {
-      run();
-      new IntersectionObserver(([en]) => {
-        rVisible = en.isIntersecting;
-        if (rVisible) run();
-        else { clearTimeout(rTimer); $('video', reel).pause(); }
-      }, { threshold: 0.1 }).observe(reel);
-    }
-  }
-
   /* ---------- Counters ---------- */
   const countIO = new IntersectionObserver((entries) => {
     entries.forEach(({ isIntersecting, target }) => {
@@ -198,7 +155,7 @@
   // Media is a clip name from /assets/video, or an image path starting with "/".
   const isVip = document.body.classList.contains('vip');
   const whyTravel = [
-    { t: 'A team trained by Dr Vekris', media: 'timelapse',
+    { t: 'A team trained by Dr Vekris', media: 'ai-planning',
       p: ['Every doctor on the Advanced Team was trained by Dr Vekris and works to the planning and hairline design standards he created. Doctors and nurses from around the world come to our Athens clinic to learn the same techniques.',
         'Your hair transplant is performed exclusively by doctors, from the local anaesthesia to the last graft, never delegated to technicians.'] },
     { t: 'A well-established clinic', media: '/assets/img/clinic/athens-lounge.webp',
