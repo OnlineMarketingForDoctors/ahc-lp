@@ -12,9 +12,6 @@
    ========================================================== */
 /* The hero video, its mirroring and its shade come from base.css, as on the homepage. */
 .gr-hero .hero-title { font-size: clamp(38px, 4.2vw, 66px); }
-/* "Greece" in a classical inscription face, with the flag beside it */
-.gr-word { font-family: "Cinzel", Georgia, serif; font-weight: 700; font-stretch: normal; letter-spacing: 0.01em; }
-.gr-flag { display: inline-block; width: .78em; height: .52em; margin: 0 .04em 0 .16em; vertical-align: .12em; border-radius: 3px; box-shadow: 0 4px 12px rgba(0,0,0,.35); }
 
 /* Travel page: purple gradient, copy on the left, a timelapse with satellites on the right */
 .gr-hero.hero-split {
