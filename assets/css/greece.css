@@ -49,7 +49,7 @@
   background: rgba(25,13,48,.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .hs-sat-a { left: 0; top: 27%; width: 28%; transform: rotate(-3deg); }
-.hs-sat-b { right: 2%; bottom: 5%; width: 24%; transform: rotate(3deg); }
+.hs-sat-b { right: 1%; bottom: 30%; width: 31%; aspect-ratio: 4 / 3; transform: rotate(3deg); }
 .hero-stage .flight { position: absolute; left: 6%; right: auto; bottom: 0; width: min(372px, 62%); opacity: 1; transform: none; transition: none; }
 
 /* Satellite card: flight time from the visitor's city */
@@ -445,9 +445,9 @@
 /* ==========================================================
    GREECE VS TURKEY (inside the Why section)
    ========================================================== */
-.versus { margin-top: clamp(50px, 6vw, 80px); }
+.versus-section { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter) clamp(70px, 8vw, 120px); }
 .versus-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px 60px; align-items: end; margin-bottom: 22px; }
-.versus-head h3 { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -0.02em; }
+.versus-head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -0.02em; }
 .versus-head p { color: var(--slate); }
 .versus .pk-table-wrap { background: #fff; border-radius: var(--r-lg); box-shadow: var(--shadow-md); padding: 8px clamp(12px, 2vw, 24px) 12px; }
 .vs-table td:last-child { color: var(--ink); }
@@ -483,7 +483,9 @@
 @media (max-width: 1120px) {
   .versus-head { grid-template-columns: 1fr; }
   .hero-stage { position: relative; top: auto; bottom: auto; right: auto; width: auto; max-width: 640px; margin: 36px var(--gutter) 140px; }
-  .hs-media { position: relative; inset: auto; aspect-ratio: 1 / .85; }
+  .hs-media { position: relative; inset: auto; aspect-ratio: 1 / .7; }
+  .hs-sat-a { top: 30%; }
+  .hs-sat-b { bottom: 0; }
   .hero-stage .flight { position: relative; left: auto; bottom: auto; width: auto; max-width: none; margin: 18px 0 0; }
 }
 @media (max-width: 760px) {
@@ -495,7 +497,7 @@
   .hs-video { top: 0; left: 10%; }
   .hs-sat { border-width: 4px; }
   .hs-sat-a { width: 32%; top: 42%; }
-  .hs-sat-b { width: 28%; right: 2%; bottom: 0; }
+  .hs-sat-b { width: 42%; right: 2%; bottom: 0; }
 }
 @media (max-width: 760px) {
   /* The comparison becomes one card per row, so both sides stay on screen */
