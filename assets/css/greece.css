@@ -565,6 +565,8 @@
   .footer-grid { grid-template-columns: 1fr; }
 
   .athens-bg { inset: 0; }
+  .athens { padding-bottom: 0; }
+  .versus-section { padding-top: 64px; }
   .athens-strip { grid-template-columns: 1fr; padding-bottom: 20px; }
   .as-card { display: grid; grid-template-columns: 120px 1fr; }
   .as-card img { aspect-ratio: auto; height: 100%; }
