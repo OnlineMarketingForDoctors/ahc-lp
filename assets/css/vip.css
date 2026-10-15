@@ -131,6 +131,7 @@
 /* Hero copy centred on phones, as on the travel page; the ticks stay aligned as one centred block */
 @media (max-width: 760px) {
   .vip .gr-hero .hero-content { text-align: center; }
+  .vip .gr-hero .hero-eyebrow::before { display: none; }
   .vip .gr-hero .hero-eyebrow, .vip .gr-hero .hero-cta, .vip .gr-hero .hero-awards { justify-content: center; }
   .vip .gr-hero .hero-hairline, .vip .gr-hero .hero-sub { margin-left: auto; margin-right: auto; }
   .vip .gr-hero .hero-points { width: max-content; max-width: 100%; margin-left: auto; margin-right: auto; text-align: left; }
