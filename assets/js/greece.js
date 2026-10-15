@@ -76,6 +76,20 @@
   if (!reduceMotion) { fRoute.classList.remove('is-flying'); setTimeout(() => fRoute.classList.add('is-flying'), 1900); }
   }
 
+  /* ---------- Travel hero on phones: the video and sights go under the headline ---------- */
+  const hsMedia = $('.hs-media');
+  if (hsMedia) {
+    const stage = $('.hero-stage');
+    const line = $('.hero-split .hero-hairline');
+    const phone = matchMedia('(max-width: 760px)');
+    const place = () => {
+      if (phone.matches) line.after(hsMedia);
+      else stage.prepend(hsMedia);
+    };
+    place();
+    phone.addEventListener('change', place);
+  }
+
   /* ---------- Counters ---------- */
   const countIO = new IntersectionObserver((entries) => {
     entries.forEach(({ isIntersecting, target }) => {
