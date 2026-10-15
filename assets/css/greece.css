@@ -100,7 +100,7 @@ img.reel-item.is-on { animation: reelZoom 7s linear both; }
 /* ==========================================================
    ATHENS (full bleed, quote, overlapping image strip)
    ========================================================== */
-.athens { position: relative; color: #fff; padding-bottom: 0; }
+.athens { position: relative; color: #fff; padding-bottom: clamp(70px, 8vw, 120px); }
 .athens-bg { position: absolute; inset: 0 0 180px 0; overflow: hidden; background: var(--ink); }
 .athens-bg img { width: 100%; height: 115%; object-fit: cover; object-position: 50% 70%; will-change: transform; }
 .athens-bg::after {
