@@ -587,43 +587,6 @@
     if (d.open) faqs.forEach((o) => { if (o !== d) o.open = false; });
   }));
 
-  /* ---------- Enquiry form ---------- */
-  // Not connected to a destination yet: on a valid submit it goes to the thank-you page.
-  const form = $('#enquiry-form');
-  const rules = {
-    'ef-name': (el) => el.value.trim().length > 1,
-    'ef-email': (el) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(el.value.trim()),
-    'ef-phone': (el) => el.value.replace(/[^\d]/g, '').length >= 8,
-    'ef-country': (el) => !!el.value,
-    'ef-source': (el) => !!el.value,
-    'ef-consent': (el) => el.checked,
-  };
-  const check = (id) => {
-    const el = $(`#${id}`);
-    const ok = rules[id](el);
-    el.setAttribute('aria-invalid', String(!ok));
-    const err = $(`#${id}-err`);
-    err.hidden = ok;
-    if (!ok) el.setAttribute('aria-describedby', `${id}-err`); else el.removeAttribute('aria-describedby');
-    return ok;
-  };
-  // Errors appear on submit and clear as soon as the field is fixed. Validating on blur
-  // would move the layout under the pointer and swallow the next click.
-  Object.keys(rules).forEach((id) => {
-    const el = $(`#${id}`);
-    const recheck = () => { if (el.getAttribute('aria-invalid') === 'true') check(id); };
-    el.addEventListener('input', recheck);
-    el.addEventListener('change', recheck);
-  });
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const bad = Object.keys(rules).filter((id) => !check(id));
-    if (bad.length) { $(`#${bad[0]}`).focus(); return; }
-    // When the form is connected to the clinic's system, send the data first and redirect on success.
-    try { sessionStorage.setItem('ahc-first-name', $('#ef-name').value.trim().split(/\s+/)[0]); } catch (err) { /* private mode */ }
-    location.assign(`/thank-you/?from=${document.body.classList.contains('vip') ? 'vip' : 'greece'}`);
-  });
-
   /* ---------- Editorial image reveal + gentle parallax ---------- */
   if (!reduceMotion) {
     const revealTargets = $$('.ba-frame, .why-media, .clinics-media img, .pk-media, .faq-media img');

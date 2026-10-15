@@ -24,7 +24,8 @@ and share `/assets` by absolute path.
 - Pages: `/hair-transplant-greece/` (both packages) and `/vip-hair-transplant/` (Vekris Signature only).
   They share `assets/js/greece.js`; the VIP page adds `assets/css/vip.css` and `body.vip`, which the script
   checks for the little copy that differs.
-- `/thank-you/` is where both forms redirect after a valid submit (`?from=greece` or `?from=vip` tailors the
+- The enquiry form on both pages is a LeadConnector (GoHighLevel) iframe; `form_embed.js` sizes it to the form.
+- `/thank-you/` is the page to send form submissions to (`?from=greece` or `?from=vip` tailors the
   copy and links). Its styles are in `assets/css/thanks.css`.
 - `assets/css/base.css` is the homepage stylesheet from the `advanced-hair-clinics` repo, trimmed to the
   sections reused here. Page-specific styles go in their own file (`assets/css/greece.css`).

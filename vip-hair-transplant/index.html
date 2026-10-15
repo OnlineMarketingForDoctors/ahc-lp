@@ -534,65 +534,28 @@
       </a>
     </div>
 
-    <!-- The form is not connected to a destination yet. -->
-    <form class="enquiry-form" id="enquiry-form" novalidate>
-      <div class="ef-fields">
-        <div class="field">
-          <label for="ef-name">Full name</label>
-          <input id="ef-name" name="name" type="text" autocomplete="name" required>
-          <p class="field-error" id="ef-name-err" hidden>Enter your full name.</p>
-        </div>
-        <div class="field">
-          <label for="ef-email">Email</label>
-          <input id="ef-email" name="email" type="email" autocomplete="email" required>
-          <p class="field-error" id="ef-email-err" hidden>Enter an email address like name@example.com.</p>
-        </div>
-        <div class="field">
-          <label for="ef-phone">Phone or WhatsApp, with country code</label>
-          <input id="ef-phone" name="phone" type="tel" autocomplete="tel" placeholder="+44 7700 900123" required>
-          <p class="field-error" id="ef-phone-err" hidden>Enter a phone number with its country code.</p>
-        </div>
-        <div class="field">
-          <label for="ef-country">Country you would travel from</label>
-          <select id="ef-country" name="country" required>
-            <option value="">Choose a country</option>
-            <option>United Kingdom</option><option>Ireland</option><option>France</option><option>Germany</option>
-            <option>Netherlands</option><option>Belgium</option><option>Switzerland</option><option>Sweden</option>
-            <option>Norway</option><option>Denmark</option><option>Italy</option><option>Spain</option>
-            <option>United Arab Emirates</option><option>Saudi Arabia</option><option>United States</option><option>Canada</option>
-            <option>Australia</option><option>Other</option>
-          </select>
-          <p class="field-error" id="ef-country-err" hidden>Choose the country you would travel from.</p>
-        </div>
-        <input type="hidden" name="package" value="vekris-signature">
-        <div class="field field-wide">
-          <label for="ef-source">How did you hear about us?</label>
-          <select id="ef-source" name="source" required>
-            <option value="">Choose an option</option>
-            <option>Search Engines (Google, Bing, Yahoo)</option>
-            <option>Social media (Facebook, Instagram, TikTok)</option>
-            <option>From a friend or family member</option>
-            <option>From another doctor</option>
-            <option>Newsletter</option>
-            <option>Text message</option>
-            <option>Influencer</option>
-            <option>Radio (incl. podcasts)</option>
-            <option>AI chats (ChatGPT, Gemini, Perplexity)</option>
-            <option>Other</option>
-          </select>
-          <p class="field-error" id="ef-source-err" hidden>Choose how you heard about us.</p>
-        </div>
-        <div class="field field-wide">
-          <label for="ef-message">Tell us about your hair loss <span class="opt">(optional)</span></label>
-          <textarea id="ef-message" name="message" rows="3" placeholder="For example: receding at the temples for five years, thinning at the crown, no previous transplant."></textarea>
-        </div>
-        <div class="field field-wide">
-          <label class="consent"><input id="ef-consent" type="checkbox" name="consent" required><span>I agree that Advanced Hair Clinics may contact me about my enquiry and store my details in line with its privacy policy.</span></label>
-          <p class="field-error" id="ef-consent-err" hidden>Tick the box so we can contact you.</p>
-        </div>
-      </div>
-      <button class="btn btn-teal btn-lg ef-submit" type="submit">Request my consultation</button>
-    </form>
+    <!-- LeadConnector form. form_embed.js resizes the iframe to the form's height. -->
+    <div class="enquiry-form">
+      <iframe
+        src="https://api.leadconnectorhq.com/widget/form/NWlmI161OVrViQD78PH1"
+        style="width:100%;height:100%;border:none;border-radius:0px"
+        id="inline-NWlmI161OVrViQD78PH1"
+        data-layout="{'id':'INLINE'}"
+        data-trigger-type="alwaysShow"
+        data-trigger-value=""
+        data-activation-type="alwaysActivated"
+        data-activation-value=""
+        data-deactivation-type="neverDeactivate"
+        data-deactivation-value=""
+        data-form-name="LP Form"
+        data-height="853"
+        data-layout-iframe-id="inline-NWlmI161OVrViQD78PH1"
+        data-form-id="NWlmI161OVrViQD78PH1"
+        data-cookie-consent="true"
+        data-cookie-consent-provider="auto"
+        title="LP Form"></iframe>
+      <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+    </div>
   </div>
 </section>
 
