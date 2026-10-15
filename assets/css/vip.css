@@ -97,3 +97,27 @@
    and balanced wrapping avoids a lone word when a phrase has to wrap on phones */
 .vip .gr-hero .hero-title { font-size: clamp(34px, 3.75vw, 54px); }
 .vip .hero-title .line > span { text-wrap: balance; }
+
+/* ---------- Travelling from abroad: a brief mention, linking to the travel page ---------- */
+.abroad { max-width: var(--max); margin: 0 auto; padding: clamp(60px, 7vw, 100px) var(--gutter) 0; }
+.abroad-inner {
+  display: grid; grid-template-columns: 220px minmax(0, 1fr) auto; gap: clamp(20px, 3vw, 40px); align-items: center;
+  background: #fff; border-radius: var(--r-lg); box-shadow: var(--shadow-md); overflow: hidden;
+  padding-right: clamp(20px, 3vw, 40px);
+}
+.abroad-inner img { width: 100%; height: 100%; min-height: 150px; object-fit: cover; }
+.abroad-text { display: grid; gap: 6px; padding: 24px 0; }
+.abroad-text h2 { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.02em; line-height: 1.15; }
+.abroad-text p { color: var(--slate); }
+@media (max-width: 1120px) {
+  .abroad-inner { grid-template-columns: 160px minmax(0, 1fr); }
+  .abroad-inner .btn { grid-column: 2; justify-self: start; margin-bottom: 24px; }
+  .abroad-text { padding-bottom: 0; }
+}
+@media (max-width: 760px) {
+  .abroad-inner { grid-template-columns: 1fr; padding: 0 0 22px; gap: 0; }
+  .abroad-inner img { height: 150px; }
+  .abroad-text, .abroad-inner .btn { margin: 0 20px; }
+  .abroad-text { padding: 18px 0 16px; }
+  .abroad-inner .btn { grid-column: 1; margin-bottom: 0; }
+}

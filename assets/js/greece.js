@@ -42,6 +42,7 @@
     newyork: ['JFK', '9 h 50 min'], toronto: ['YYZ', '10 h'],
   };
   const fCity = $('#flight-city');
+  if (fCity) {
   const fRoute = $('.flight-route');
   // The arc SVG stretches to the card, so the plane's path is rebuilt from the
   // arc's rendered box using the same curve as the SVG (viewBox 200 x 50).
@@ -73,6 +74,50 @@
   fCity.addEventListener('change', setFlight);
   setFlight();
   if (!reduceMotion) { fRoute.classList.remove('is-flying'); setTimeout(() => fRoute.classList.add('is-flying'), 1900); }
+  }
+
+  /* ---------- Hero reel (travel page): Greece clip, then photos of the clinic ---------- */
+  const reel = $('.hero-reel');
+  if (reel) {
+    const items = $$('.reel-item', reel);
+    const cap = $('#reel-caption');
+    const PHOTO = 5500;
+    let r = 0, rTimer, rVisible = true;
+    const setCaption = (el) => {
+      cap.classList.add('is-swapping');
+      setTimeout(() => {
+        cap.innerHTML = `<span>${el.dataset.place}</span> ${el.dataset.caption}`;
+        cap.classList.remove('is-swapping');
+      }, 300);
+    };
+    const next = () => show((r + 1) % items.length);
+    const run = () => {
+      clearTimeout(rTimer);
+      if (!rVisible) return;
+      const el = items[r];
+      if (el.tagName === 'VIDEO') el.play().catch(() => { rTimer = setTimeout(next, PHOTO); });
+      else rTimer = setTimeout(next, PHOTO);
+    };
+    const show = (i) => {
+      items[r].classList.remove('is-on');
+      r = i;
+      const el = items[r];
+      if (el.tagName === 'VIDEO') el.currentTime = 0;
+      // Restart the slow zoom on each photo
+      el.classList.remove('is-on'); void el.offsetWidth; el.classList.add('is-on');
+      setCaption(el);
+      run();
+    };
+    $('video', reel).addEventListener('ended', next);
+    if (!reduceMotion) {
+      run();
+      new IntersectionObserver(([en]) => {
+        rVisible = en.isIntersecting;
+        if (rVisible) run();
+        else { clearTimeout(rTimer); $('video', reel).pause(); }
+      }, { threshold: 0.1 }).observe(reel);
+    }
+  }
 
   /* ---------- Counters ---------- */
   const countIO = new IntersectionObserver((entries) => {
@@ -149,14 +194,39 @@
     vp.addEventListener('touchend', () => setTimeout(() => vp.classList.remove('is-paused'), 2500));
   }
 
-  /* ---------- Why Dr Vekris (tabs with video) ---------- */
-  const why = [
+  /* ---------- Why (tabs with video or photo) ---------- */
+  // Media is a clip name from /assets/video, or an image path starting with "/".
+  const isVip = document.body.classList.contains('vip');
+  const whyTravel = [
+    { t: 'A team trained by Dr Vekris', media: 'timelapse',
+      p: ['Every doctor on the Advanced Team was trained by Dr Vekris and works to the planning and hairline design standards he created. Doctors and nurses from around the world come to our Athens clinic to learn the same techniques.',
+        'Your hair transplant is performed exclusively by doctors, from the local anaesthesia to the last graft, never delegated to technicians.'] },
+    { t: 'A well-established clinic', media: '/assets/img/clinic/athens-lounge.webp',
+      p: ['Dr Vekris founded Advanced Hair Clinics in Athens, and it has grown into 15 clinics across Greece and Cyprus, with more than 30,000 hair transplants performed by its medical teams.',
+        'Patients travel to us from over 80 countries, and the clinic’s awards include the IMTJ Medical Travel Awards and Gold at the Medical Beauty Awards 2024.'] },
+    { t: 'A world-renowned surgeon behind it', media: '/assets/img/doc/fue-europe-speech.webp',
+      p: ['Plastic surgeon Dr Anastasios Vekris is President of the FUE Europe Society and an invited trainer at the world’s leading hair restoration congresses, including ISHRS and IMCAS.',
+        'He sets the clinic’s medical standards. If you would like him to perform your procedure himself, you can choose the Vekris Signature upgrade.'] },
+    { t: 'Combine it with a holiday', media: '/assets/img/greece/coast-cafe.webp',
+      p: ['You only need 2 to 3 days in Athens, and the city makes those days easy: a European capital with year-round sunshine, the Acropolis on your doorstep and the coast a short drive away.',
+        'You are welcome to bring a partner or friend, or to add a few days to your trip. Your doctor will advise you on sun, swimming and activity while your scalp heals.'] },
+    { t: 'Better value than you might expect', media: '/assets/img/clinic/athens-reception.webp',
+      p: ['Turkey is known for low headline prices. In Athens, a complete hair transplant package starts from €3,000, with every step performed by doctors under EU medical standards.',
+        'Your package includes your consultation, procedure, airport transfers and post-operative review, so you know what you are paying for before you travel.'] },
+    { t: 'Techniques surgeons travel to learn', media: 'sharp-implanter',
+      p: ['Grafts are placed in one step with the Sharp Implanter, without first opening holes in the recipient area, for precise placement with less trauma to the scalp.',
+        'If you would rather nobody knew, ask about Unshaven FUE. Grafts are placed between your existing hairs, so most patients are back to work and social life within 24 to 48 hours.'] },
+    { t: 'Support before, during and after your visit', media: 'aftercare',
+      p: ['From your first message to your post-operative review and beyond, our team supports you in English, French and German, by phone, email and WhatsApp.',
+        'Patients who trust us become “our people”, and know they can reach us at any time with any question.'] },
+  ];
+  const whyVip = [
     { t: 'A surgeon other surgeons learn from', media: 'timelapse',
       p: ['Dr Anastasios Vekris is President of the FUE Europe Society and an invited trainer at the world’s leading hair restoration congresses. Every year, doctors and nurses from around the world come to Advanced Hair Clinics in Athens to learn his techniques.',
         'He is the only doctor to have performed hair transplant surgery in 17 countries, and he openly presents the results of his clinic to the most demanding scientific audiences, including the ISHRS World Congress.'] },
     { t: 'Exclusively by doctors, from start to finish', media: 'timelapse',
       p: ['At Advanced Hair Clinics a hair transplant is treated as what it is: a medical procedure. Local anaesthesia, extraction and implantation are performed only by doctors, never delegated to technicians.',
-        document.body.classList.contains('vip')
+        isVip
           ? 'With the Vekris Signature, Dr Vekris performs your procedure himself, supported by the doctors and nurses he has trained to his own standards.'
           : 'Every doctor on the team was trained by Dr Vekris and works to the planning and hairline standards he created, so the same care goes into every graft whichever package you choose.'] },
     { t: 'Direct implantation with the Sharp Implanter', media: 'sharp-implanter',
@@ -177,6 +247,11 @@
       p: ['From your first message to your post-operative review and beyond, our team supports you in English, French and German, by phone, email and WhatsApp.',
         'Patients who trust us become “our people”, and know they can reach us at any time with any question.'] },
   ];
+  const why = isVip ? whyVip : whyTravel;
+  const isImg = (m) => m.startsWith('/');
+  const mediaHtml = (m, attrs = '') => isImg(m)
+    ? `<img src="${m}" alt="" loading="lazy" ${attrs}>`
+    : `<video muted loop playsinline preload="none" poster="${A}/video/${m}-poster.webp" aria-hidden="true" ${attrs}><source src="${A}/video/${m}.mp4" type="video/mp4"></video>`;
   const WHY_DUR = 9000;
   const tabs = $('#why-tabs');
   const media = $('#why-media');
@@ -185,7 +260,7 @@
   tabs.innerHTML = why.map((w, i) => `<button type="button" role="tab" id="why-t${i}" aria-controls="why-panel" aria-selected="${i === 0}" data-i="${i}"><span class="bar" aria-hidden="true"></span>${w.t}</button>`).join('');
   // One video element per clip, shared by tabs that use the same clip.
   const clips = [...new Set(why.map((w) => w.media))];
-  media.innerHTML = clips.map((v) => `<video muted loop playsinline preload="none" poster="${A}/video/${v}-poster.webp" aria-hidden="true" data-clip="${v}"><source src="${A}/video/${v}.mp4" type="video/mp4"></video>`).join('');
+  media.innerHTML = clips.map((v) => mediaHtml(v, `data-clip="${v}"`)).join('');
   const mediaEls = [...media.children];
   let wIdx = 0, wTimer, wStart = 0, wRemain = WHY_DUR, whyVisible = false, wExpanded = false, wHover = false;
   const schedule = (ms) => {
@@ -214,6 +289,7 @@
     mediaEls.forEach((el) => {
       const on = el.dataset.clip === w.media;
       el.classList.toggle('is-active', on);
+      if (el.tagName !== 'VIDEO') return;
       if (on && whyVisible && !reduceMotion) { el.preload = 'auto'; el.play().catch(() => {}); } else if (!on) el.pause();
     });
     panel.setAttribute('aria-labelledby', `why-t${i}`);
@@ -258,7 +334,7 @@
     whyVisible = en.isIntersecting;
     if (whyVisible) { showWhy(wIdx); return; }
     clearTimeout(wTimer);
-    mediaEls.forEach((el) => el.pause());
+    mediaEls.forEach((el) => { if (el.tagName === 'VIDEO') el.pause(); });
   }, { threshold: 0.35 }).observe(whyStage);
   showWhy(0);
 
@@ -266,13 +342,14 @@
   const whyAcc = document.createElement('div');
   whyAcc.className = 'why-acc';
   whyAcc.innerHTML = why.map((w, i) => `<details${i === 0 ? ' open' : ''}><summary>${w.t}</summary><div class="wa-body">
-    <video muted loop playsinline preload="none" poster="${A}/video/${w.media}-poster.webp" aria-hidden="true"><source src="${A}/video/${w.media}.mp4" type="video/mp4"></video>
+    ${mediaHtml(w.media, 'aria-hidden="true"')}
     ${w.p.map((x) => `<p>${x}</p>`).join('')}${w.l ? `<ul>${w.l.map((x) => `<li>${x}</li>`).join('')}</ul>` : ''}</div></details>`).join('');
   $('.why-body').after(whyAcc);
   const accItems = $$('details', whyAcc);
   let accVisible = false;
   const accPlay = () => accItems.forEach((d) => {
     const v = $('video', d);
+    if (!v) return;
     if (d.open && accVisible && !reduceMotion) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause();
   });
   accItems.forEach((d) => d.addEventListener('toggle', () => {
@@ -434,7 +511,7 @@
 
   /* ---------- Meet Dr Vekris: Read more ---------- */
   const meetBtn = $('.meet-toggle');
-  meetBtn.addEventListener('click', () => {
+  if (meetBtn) meetBtn.addEventListener('click', () => {
     const more = $('#meet-more');
     more.hidden = !more.hidden;
     meetBtn.textContent = more.hidden ? 'Read more' : 'Show less';

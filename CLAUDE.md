@@ -21,9 +21,13 @@ noindex signals above, and blocked URLs can still appear in results if linked fr
 Static HTML, CSS and JS, no build step. Pages live in their own folders (`/hair-transplant-greece/index.html`)
 and share `/assets` by absolute path.
 
-- Pages: `/hair-transplant-greece/` (both packages) and `/vip-hair-transplant/` (Vekris Signature only).
-  They share `assets/js/greece.js`; the VIP page adds `assets/css/vip.css` and `body.vip`, which the script
-  checks for the little copy that differs.
+- Pages: `/hair-transplant-greece/` (travel page: sells Greece and the clinic, Advanced Team first, Vekris Signature
+  as the optional upgrade) and `/vip-hair-transplant/` (Vekris Signature only, aimed at patients in Greece and
+  Cyprus, with travel as a brief mention). They share `assets/js/greece.js`; the VIP page adds `assets/css/vip.css`
+  and `body.vip`, which the script checks for what differs (for example the Why tabs).
+- `#cost` on the travel page is used as a Google Ads sitelink: keep that id.
+- Placeholders still to be confirmed by the clinic are marked with `class="tbc"` (graft count for the €3,000
+  package). The Greece vs Turkey and UK comparisons are qualitative and await the clinic's approval.
 - The enquiry form on both pages is a LeadConnector (GoHighLevel) iframe; `form_embed.js` sizes it to the form.
 - `/thank-you/` is the page to send form submissions to (`?from=greece` or `?from=vip` tailors the
   copy and links). Its styles are in `assets/css/thanks.css`.
