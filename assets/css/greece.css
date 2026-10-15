@@ -345,10 +345,11 @@
 .enquiry-wa:hover { background: rgba(37,211,102,.3); }
 .enquiry-wa svg { width: 24px; height: 24px; fill: #25D366; flex: none; }
 
-/* The LeadConnector form brings its own padding and fields: the card only frames it.
+/* The LeadConnector form sits in a white card with 40px of padding around it.
    form_embed.js sets the iframe height from the form, so the card has no fixed height. */
 .enquiry-form {
   background: #fff; border-radius: var(--r-lg); overflow: hidden;
+  padding: 40px;
   box-shadow: 0 50px 100px -40px rgba(0,0,0,.8);
 }
 .enquiry-form iframe { display: block; width: 100%; min-height: 0; }
