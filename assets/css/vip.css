@@ -68,6 +68,7 @@
 
 /* The offer comes straight after the overlapping authority card, so it needs room above */
 .sig { margin-top: clamp(80px, 9vw, 140px); }
+.results + .sig { margin-top: 0; }
 
 @media (max-width: 1120px) {
   .sig-inner { grid-template-columns: 1fr; }
@@ -85,8 +86,6 @@
   .site-header.is-scrolled .header-book-mobile { font-size: 11.5px; padding: 11px 14px; }
 }
 
-/* Reviews follow the white results band directly here */
-.vip .reviews { margin-top: 0; }
 
 /* Longer button labels on this page: let them wrap on phones rather than widen the layout */
 @media (max-width: 760px) {
