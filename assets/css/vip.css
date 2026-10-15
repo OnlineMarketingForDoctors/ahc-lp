@@ -134,7 +134,8 @@
   .vip .gr-hero .hero-eyebrow::before { display: none; }
   .vip .gr-hero .hero-eyebrow, .vip .gr-hero .hero-cta, .vip .gr-hero .hero-awards { justify-content: center; }
   .vip .gr-hero .hero-hairline, .vip .gr-hero .hero-sub { margin-left: auto; margin-right: auto; }
-  .vip .gr-hero .hero-points { width: max-content; max-width: 100%; margin-left: auto; margin-right: auto; text-align: left; }
+  .vip .gr-hero .hero-points { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 14px; text-align: left; }
+  .vip .gr-hero .hero-points li { font-size: 14px; line-height: 1.35; }
 }
 
 /* No flight card under the copy here, so the hero keeps room for the overlapping authority card */
