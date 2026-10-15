@@ -25,6 +25,7 @@ and share `/assets` by absolute path.
   as the optional upgrade) and `/vip-hair-transplant/` (Vekris Signature only: private access to Dr Vekris for
   high-profile, discreet, complex, revision and specialised cases, as a destination treatment). They share `assets/js/greece.js`; the VIP page adds `assets/css/vip.css`
   and `body.vip`, which the script checks for what differs (for example the Why tabs).
+- `/` is a plain list of the landing pages (no redirect); add new landing pages to it.
 - `#cost` on the travel page is used as a Google Ads sitelink: keep that id.
 - Placeholders still to be confirmed by the clinic are marked with `class="tbc"` (graft count for the €3,000
   package). The Greece vs Turkey and UK comparisons are qualitative and await the clinic's approval.
