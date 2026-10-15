@@ -2,6 +2,59 @@
    VIP hair transplant · layer on top of base.css and greece.css
    ========================================================== */
 
+/* ---------- Who comes to Dr Vekris: four patient needs, then specialised procedures ---------- */
+.cases { max-width: var(--max); margin: 0 auto; padding: clamp(80px, 9vw, 130px) var(--gutter) 0; }
+.cases-head { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 6px 60px; align-items: end; margin-bottom: clamp(36px, 4vw, 56px); }
+.cases-head .kicker { grid-column: 1 / -1; }
+.cases-head p:not(.kicker) { color: var(--slate); font-size: 18px; }
+.cases-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
+.case {
+  display: grid; align-content: start; gap: 10px;
+  padding: 28px 26px 30px; border-radius: var(--r-lg);
+  background: #fff; box-shadow: var(--shadow-md);
+}
+.case svg {
+  width: 48px; height: 48px; padding: 12px; margin-bottom: 6px; border-radius: 50%;
+  fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  background: var(--grad-teal); box-shadow: 0 12px 24px -12px rgba(17,163,182,.7);
+}
+.case h3 { font-family: var(--display); font-weight: 600; font-size: 21px; letter-spacing: -0.02em; line-height: 1.15; }
+.case p { font-size: 15px; line-height: 1.55; color: var(--slate); }
+
+.special {
+  margin-top: clamp(18px, 2vw, 26px);
+  display: grid; gap: 24px;
+  padding: clamp(28px, 3.5vw, 48px); border-radius: var(--r-lg);
+  color: #fff;
+  background:
+    radial-gradient(60% 90% at 100% 0%, rgba(120,72,200,.35), transparent 70%),
+    radial-gradient(50% 80% at 0% 100%, rgba(17,163,182,.25), transparent 70%),
+    var(--ink);
+  box-shadow: var(--shadow-lg);
+}
+.special-head h3 { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.02em; line-height: 1.12; }
+.special-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 30px; }
+.special-head p { color: var(--lilac); }
+.special-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.special-grid li {
+  display: grid; gap: 6px; align-content: start;
+  padding: 18px; border-radius: var(--r-md);
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+}
+.special-grid strong { font-weight: 800; font-size: 15.5px; color: var(--teal-soft); }
+.special-grid span { font-size: 14px; line-height: 1.5; color: #E4DEF2; }
+
+@media (max-width: 1120px) {
+  .cases-head { grid-template-columns: 1fr; }
+  .cases-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .special-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .cases-grid, .special-grid { grid-template-columns: 1fr; }
+  .case { padding: 22px 20px 24px; }
+  .special { padding: 24px 18px; }
+}
+
 /* ---------- The Vekris Signature: the single offer ---------- */
 .sig {
   position: relative; color: #fff; overflow: hidden;

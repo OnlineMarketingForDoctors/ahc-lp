@@ -22,8 +22,8 @@ Static HTML, CSS and JS, no build step. Pages live in their own folders (`/hair-
 and share `/assets` by absolute path.
 
 - Pages: `/hair-transplant-greece/` (travel page: sells Greece and the clinic, Advanced Team first, Vekris Signature
-  as the optional upgrade) and `/vip-hair-transplant/` (Vekris Signature only, aimed at patients in Greece and
-  Cyprus, with travel as a brief mention). They share `assets/js/greece.js`; the VIP page adds `assets/css/vip.css`
+  as the optional upgrade) and `/vip-hair-transplant/` (Vekris Signature only: private access to Dr Vekris for
+  high-profile, discreet, complex, revision and specialised cases, as a destination treatment). They share `assets/js/greece.js`; the VIP page adds `assets/css/vip.css`
   and `body.vip`, which the script checks for what differs (for example the Why tabs).
 - `#cost` on the travel page is used as a Google Ads sitelink: keep that id.
 - Placeholders still to be confirmed by the clinic are marked with `class="tbc"` (graft count for the €3,000
