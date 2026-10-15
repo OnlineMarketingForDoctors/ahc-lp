@@ -588,7 +588,7 @@
   }));
 
   /* ---------- Enquiry form ---------- */
-  // Not connected to a destination yet: on a valid submit it shows the confirmation only.
+  // Not connected to a destination yet: on a valid submit it goes to the thank-you page.
   const form = $('#enquiry-form');
   const rules = {
     'ef-name': (el) => el.value.trim().length > 1,
@@ -619,10 +619,9 @@
     e.preventDefault();
     const bad = Object.keys(rules).filter((id) => !check(id));
     if (bad.length) { $(`#${bad[0]}`).focus(); return; }
-    form.classList.add('is-sent');
-    const done = $('#ef-done');
-    done.hidden = false;
-    done.focus();
+    // When the form is connected to the clinic's system, send the data first and redirect on success.
+    try { sessionStorage.setItem('ahc-first-name', $('#ef-name').value.trim().split(/\s+/)[0]); } catch (err) { /* private mode */ }
+    location.assign(`/thank-you/?from=${document.body.classList.contains('vip') ? 'vip' : 'greece'}`);
   });
 
   /* ---------- Editorial image reveal + gentle parallax ---------- */

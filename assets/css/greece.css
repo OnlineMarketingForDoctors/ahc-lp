@@ -383,11 +383,6 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .consent { display: flex; gap: 12px; align-items: flex-start; font-weight: 500 !important; font-size: 14px !important; color: var(--slate); cursor: pointer; }
 .consent input { flex: none; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--teal); }
 .ef-submit { justify-self: start; }
-.ef-done { padding: 22px 24px; border-radius: var(--r-md); background: rgba(17,163,182,.1); border: 1.5px solid rgba(17,163,182,.4); }
-.ef-done h3 { font-family: var(--display); font-weight: 600; font-size: 24px; letter-spacing: -0.02em; margin-bottom: 6px; }
-.ef-done p { color: var(--slate); }
-.ef-done:focus { outline: none; }
-.enquiry-form.is-sent .ef-fields, .enquiry-form.is-sent .ef-submit { display: none; }
 
 /* ==========================================================
    FOOTER

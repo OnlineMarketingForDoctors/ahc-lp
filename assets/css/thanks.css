@@ -1,0 +1,98 @@
+/* ==========================================================
+   Thank-you page · layer on top of base.css and greece.css
+   ========================================================== */
+.ty-header { grid-template-columns: 1fr auto; }
+
+/* ---------- Confirmation: card over the Athens dusk image ---------- */
+.ty { position: relative; color: #fff; background: var(--ink); overflow: hidden; }
+.ty-bg { position: absolute; inset: 0; }
+.ty-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 75%; }
+.ty-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(25,13,48,.92) 0%, rgba(25,13,48,.7) 55%, rgba(25,13,48,.45) 100%),
+              linear-gradient(0deg, rgba(25,13,48,.9) 0%, rgba(25,13,48,0) 40%);
+}
+.ty-inner {
+  position: relative; max-width: var(--max); margin: 0 auto;
+  padding: calc(var(--header-h) + clamp(40px, 6vw, 80px)) var(--gutter) clamp(70px, 8vw, 120px);
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(30px, 5vw, 80px); align-items: center;
+}
+.ty-card {
+  background: #fff; color: var(--ink); border-radius: var(--r-lg);
+  padding: clamp(28px, 4vw, 56px);
+  box-shadow: 0 50px 100px -40px rgba(0,0,0,.8);
+  display: grid; gap: 16px; justify-items: start;
+  animation: tyIn .8s var(--ease) both;
+}
+@keyframes tyIn { from { opacity: 0; transform: translateY(18px); } }
+.ty-card .h2 { font-size: clamp(30px, 3.2vw, 46px); max-width: 16em; }
+.ty-lead { color: var(--slate); font-size: 18px; max-width: 34em; }
+
+/* The tick draws itself once, the page's single moment of motion */
+.ty-tick svg { width: 58px; height: 58px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.ty-tick circle { stroke: var(--teal); stroke-width: 3; stroke-dasharray: 151; stroke-dashoffset: 151; animation: tyDraw .9s .2s var(--ease) forwards; }
+.ty-tick path { stroke: var(--teal); stroke-width: 4; stroke-dasharray: 40; stroke-dashoffset: 40; animation: tyDraw .5s 1s var(--ease) forwards; }
+@keyframes tyDraw { to { stroke-dashoffset: 0; } }
+
+.ty-sub { margin-top: 10px; font-size: 15px; font-weight: 800; }
+.ty-steps { counter-reset: ty; display: grid; gap: 10px; width: 100%; }
+.ty-steps li {
+  counter-increment: ty; position: relative;
+  padding: 14px 18px 14px 60px; border-radius: var(--r-md); background: var(--pearl);
+}
+.ty-steps li::before {
+  content: counter(ty); position: absolute; left: 16px; top: 14px;
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  font-weight: 800; font-size: 14px; color: #fff; background: var(--grad-teal);
+}
+.ty-steps h3 { font-size: 16px; font-weight: 800; line-height: 1.3; }
+.ty-steps p { margin-top: 2px; font-size: 14.5px; color: var(--slate); line-height: 1.5; }
+
+.ty-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 8px; }
+.ty-wa { gap: 10px; background: #25D366; background-image: none; box-shadow: 0 14px 30px -12px rgba(37,211,102,.6); }
+.ty-wa:hover { box-shadow: 0 20px 36px -12px rgba(37,211,102,.75); }
+.ty-wa svg { width: 22px; height: 22px; fill: currentColor; flex: none; }
+.ty-phone { color: var(--ink); }
+.ty-phone .header-phone-label { color: var(--teal-deep); }
+
+/* Layered photos beside the card */
+.ty-media { position: relative; margin: 0; padding: 0 0 22% 14%; animation: tyIn .8s .15s var(--ease) both; }
+.tym-main { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; border-radius: var(--r-lg); box-shadow: 0 40px 80px -30px rgba(0,0,0,.8); }
+.tym-sat {
+  position: absolute; left: 0; bottom: 0; width: 62%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: var(--r-md); border: 8px solid var(--ink); box-shadow: 0 30px 60px -24px rgba(0,0,0,.8);
+}
+
+/* ---------- While you wait ---------- */
+.ty-more { max-width: var(--max); margin: 0 auto; padding: clamp(70px, 8vw, 110px) var(--gutter); }
+.ty-more-head { margin-bottom: 28px; }
+.ty-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
+.ty-links a {
+  display: grid; height: 100%; text-decoration: none; color: var(--ink);
+  background: #fff; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.ty-links a:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.ty-links img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 25%; }
+.ty-links span { display: grid; gap: 6px; padding: 20px 22px 24px; font-size: 15px; color: var(--slate); line-height: 1.5; }
+.ty-links strong { font-family: var(--display); font-weight: 600; font-size: 21px; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink); }
+
+@media (max-width: 1120px) {
+  .ty-inner { grid-template-columns: 1fr; }
+  .ty-media { display: none; }
+  .ty-links { grid-template-columns: 1fr; }
+  .ty-links a { grid-template-columns: 150px 1fr; align-items: center; }
+  .ty-links img { height: 100%; aspect-ratio: auto; }
+}
+@media (max-width: 760px) {
+  .ty-card { padding: 24px 20px; }
+  .ty-steps li { padding: 12px 14px 12px 54px; }
+  .ty-steps li::before { left: 12px; top: 12px; }
+  .ty-actions .btn { width: 100%; white-space: normal; }
+  .ty-links a { grid-template-columns: 110px 1fr; }
+  .ty-links span { padding: 14px 16px; font-size: 14px; }
+  .ty-links strong { font-size: 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ty-tick circle, .ty-tick path { stroke-dashoffset: 0; }
+}
