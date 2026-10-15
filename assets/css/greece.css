@@ -224,7 +224,6 @@
 
 .pk h3 .pk-sub { display: block; margin-top: 8px; font-family: var(--sans); font-size: 16px; font-weight: 700; letter-spacing: 0; color: var(--teal-soft); }
 .pk-grafts { font-weight: 700; font-size: 15px; color: #fff; }
-.pk-vip .text-link { font-size: 14.5px; }
 /* Figures still to be confirmed by the clinic */
 .tbc { display: inline-block; padding: 0 6px; border: 1.5px dashed currentColor; border-radius: 6px; font-weight: 800; line-height: 1.35; }
 
