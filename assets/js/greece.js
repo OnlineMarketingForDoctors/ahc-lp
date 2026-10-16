@@ -179,7 +179,7 @@
       p: ['Plastic surgeon Dr Anastasios Vekris is President of the FUE Europe Society and an invited trainer at the world’s leading hair restoration congresses, including ISHRS and IMCAS.',
         'He sets the clinic’s medical standards. If you would like him to perform your procedure himself, you can choose the Vekris Signature upgrade.'] },
     { t: 'Combine it with a holiday', media: '/assets/img/greece/coast-cafe.webp',
-      p: ['You only need 2 to 3 days in Athens, and the city makes those days easy: a European capital with year-round sunshine, the Acropolis on your doorstep and the coast a short drive away.',
+      p: ['You only need 3 to 4 days in Athens, and the city makes those days easy: a European capital with year-round sunshine, the Acropolis on your doorstep and the coast a short drive away.',
         'You are welcome to bring a partner or friend, or to add a few days to your trip. Your doctor will advise you on sun, swimming and activity while your scalp heals.'] },
     { t: 'Better value than you might expect', media: '/assets/img/clinic/athens-reception.webp',
       p: ['Turkey is known for low headline prices. In Athens, a complete hair transplant package starts from €3,000, with every step performed by doctors under EU medical standards.',
