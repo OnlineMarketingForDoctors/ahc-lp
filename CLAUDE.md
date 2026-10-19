@@ -27,8 +27,9 @@ and share `/assets` by absolute path.
   and `body.vip`, which the script checks for what differs (for example the Why tabs).
 - `/` is a plain list of the landing pages (no redirect); add new landing pages to it.
 - `#cost` on the travel page is used as a Google Ads sitelink: keep that id.
-- Placeholders still to be confirmed by the clinic are marked with `class="tbc"` (graft count for the €3,000
-  package). The Greece vs Turkey and UK comparisons are qualitative and await the clinic's approval.
+- Pricing (Advanced Team): one surgical day from €3,000, two surgical days €6,000. Never state a graft count:
+  grafts are set by the individual medical assessment. The Greece vs Turkey and UK comparisons are qualitative
+  and await the clinic's approval.
 - The enquiry form on both pages is a LeadConnector (GoHighLevel) iframe; `form_embed.js` sizes it to the form.
 - `/thank-you/` is the page to send form submissions to (`?from=greece` or `?from=vip` tailors the
   copy and links). Its styles are in `assets/css/thanks.css`.
