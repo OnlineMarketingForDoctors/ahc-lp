@@ -46,6 +46,14 @@
 .hs-sat-b { right: 1%; bottom: 30%; width: 31%; aspect-ratio: 4 / 3; transform: rotate(3deg); }
 .hero-stage .flight { position: absolute; left: 6%; right: auto; bottom: 0; width: min(372px, 62%); opacity: 1; transform: none; transition: none; }
 
+/* German: longer compound words, so the hero headline runs a little smaller */
+html[lang="de"] .gr-hero .hero-title { font-size: clamp(30px, 3.7vw, 58px); }
+html[lang="de"] .hero-content { min-width: 0; }
+@media (max-width: 760px) {
+  html[lang="de"] .gr-hero .hero-title { font-size: clamp(28px, 8.2vw, 40px); }
+  html[lang="de"] .btn { white-space: normal; text-align: center; }
+}
+
 /* Satellite card: flight time from the visitor's city */
 .flight {
   position: absolute; z-index: 3;

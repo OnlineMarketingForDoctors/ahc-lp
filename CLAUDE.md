@@ -25,6 +25,8 @@ and share `/assets` by absolute path.
   as the optional upgrade) and `/vip-hair-transplant/` (Vekris Signature only: private access to Dr Vekris for
   high-profile, discreet, complex, revision and specialised cases, as a destination treatment). They share `assets/js/greece.js`; the VIP page adds `assets/css/vip.css`
   and `body.vip`, which the script checks for what differs (for example the Why tabs).
+- `/de/haartransplantation-griechenland/` is the German copy of the travel page (`<html lang="de">`). The shared
+  script switches its own copy to German when `lang="de"`, so keep both versions of any new script text in step.
 - `/` is a plain list of the landing pages (no redirect); add new landing pages to it.
 - `#cost` on the travel page is used as a Google Ads sitelink: keep that id.
 - Pricing (Advanced Team): one surgical day from €3,000, two surgical days €6,000. Never state a graft count:

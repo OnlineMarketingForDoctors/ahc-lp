@@ -5,6 +5,10 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const A = '/assets';
+  // German pages (<html lang="de">) swap the script's own copy; English stays the default.
+  const DE = document.documentElement.lang === 'de';
+  const T = (en, de) => (DE ? de : en);
+  const num = (v) => (DE ? String(v).replace(/,/g, '.') : v);
 
   /* ---------- Load sequence ---------- */
   requestAnimationFrame(() => document.body.classList.add('is-loaded'));
@@ -25,7 +29,7 @@
   const menu = $('#mobile-menu');
   const setMenu = (open) => {
     menuBtn.setAttribute('aria-expanded', open);
-    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menuBtn.setAttribute('aria-label', open ? T('Close menu', 'Menü schließen') : T('Open menu', 'Menü öffnen'));
     menu.hidden = !open;
     document.body.style.overflow = open ? 'hidden' : '';
   };
@@ -40,7 +44,11 @@
     paris: ['CDG', '3 h 15 min'], amsterdam: ['AMS', '3 h 20 min'], frankfurt: ['FRA', '2 h 50 min'],
     zurich: ['ZRH', '2 h 30 min'], stockholm: ['ARN', '3 h 35 min'], dubai: ['DXB', '4 h 40 min'],
     newyork: ['JFK', '9 h 50 min'], toronto: ['YYZ', '10 h'],
+    // German page
+    munich: ['MUC', '2 h 25 min'], berlin: ['BER', '2 h 50 min'], hamburg: ['HAM', '3 h 10 min'],
+    duesseldorf: ['DUS', '3 h 10 min'], cologne: ['CGN', '3 h'], stuttgart: ['STR', '2 h 40 min'], vienna: ['VIE', '2 h 5 min'],
   };
+  const flightTime = (t) => (DE ? t.replace(' h', ' Std.').replace(' min', ' Min.') : t);
   const fCity = $('#flight-city');
   if (fCity) {
   const fRoute = $('.flight-route');
@@ -59,7 +67,7 @@
   const setFlight = () => {
     const [code, time] = flights[fCity.value];
     $('#flight-code').textContent = code;
-    $('#flight-time').textContent = time;
+    $('#flight-time').textContent = flightTime(time);
     if (reduceMotion) return;
     fRoute.classList.remove('is-flying');
     void fRoute.offsetWidth; // restart the animation
@@ -70,7 +78,8 @@
   const byZone = { 'Europe/London': 'london', 'Europe/Dublin': 'dublin', 'Europe/Paris': 'paris', 'Europe/Amsterdam': 'amsterdam',
     'Europe/Berlin': 'frankfurt', 'Europe/Zurich': 'zurich', 'Europe/Stockholm': 'stockholm', 'Asia/Dubai': 'dubai',
     'America/New_York': 'newyork', 'America/Toronto': 'toronto' };
-  if (byZone[tz]) fCity.value = byZone[tz];
+  if (DE) Object.assign(byZone, { 'Europe/Berlin': 'berlin', 'Europe/Vienna': 'vienna' });
+  if (byZone[tz] && fCity.querySelector(`option[value="${byZone[tz]}"]`)) fCity.value = byZone[tz];
   fCity.addEventListener('change', setFlight);
   setFlight();
   if (!reduceMotion) { fRoute.classList.remove('is-flying'); setTimeout(() => fRoute.classList.add('is-flying'), 1900); }
@@ -100,7 +109,7 @@
       const t0 = performance.now();
       const tick = (t) => {
         const p = Math.min(1, (t - t0) / 1600);
-        target.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))).toLocaleString('en-GB');
+        target.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))).toLocaleString(DE ? 'de-DE' : 'en-GB');
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
@@ -124,13 +133,13 @@
     { n: 'Marios Bompoulos', c: '#E67E22', t: 'Amazing experience. I performed hair transplant with excellent results. Extremely helpful and friendly staff. The whole processes was seamless. I highly recommend them to anyone who is looking for a hair transplant.' },
     { n: 'Eleni Theodorakopoulou', c: '#1565C0', t: 'Congratulations to the whole team of Advanced Hair Clinics. I solved my hairloss problem combining the unshaved FUE technique and conservative treatment of minoxidil and prp. My hair is now falling less and is thicker and more strong. Many thanks to Dr Anastasios Vekris and Dr Antonia Andriopoulou!' },
   ];
-  const gSmall = '<svg class="g-logo" viewBox="0 0 48 48" aria-label="Google review"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';
+  const gSmall = `<svg class="g-logo" viewBox="0 0 48 48" aria-label="${T('Google review', 'Google-Bewertung')}"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>`;
   const track = $('#reviews-track');
   track.innerHTML = reviews.map((r) => `
     <li class="review">
       <div class="review-top">
         <span class="avatar" style="background:${r.c}" aria-hidden="true">${esc(r.n[0])}</span>
-        <div><p class="review-name">${esc(r.n)}</p><p class="review-meta"><span class="stars" aria-label="5 out of 5 stars">★★★★★</span></p></div>
+        <div><p class="review-name">${esc(r.n)}</p><p class="review-meta"><span class="stars" aria-label="${T('5 out of 5 stars', '5 von 5 Sternen')}">★★★★★</span></p></div>
         ${gSmall}
       </div>
       <p class="review-text is-clamped">${esc(r.t).replace(/Vekris/g, '<mark>Vekris</mark>')}</p>
@@ -140,11 +149,11 @@
     const more = document.createElement('button');
     more.type = 'button';
     more.className = 'review-more';
-    more.textContent = 'Read more';
+    more.textContent = T('Read more', 'Weiterlesen');
     more.setAttribute('aria-expanded', 'false');
     more.addEventListener('click', () => {
       const open = p.classList.toggle('is-clamped') === false;
-      more.textContent = open ? 'Show less' : 'Read more';
+      more.textContent = open ? T('Show less', 'Weniger anzeigen') : T('Read more', 'Weiterlesen');
       more.setAttribute('aria-expanded', open);
     });
     p.after(more);
@@ -218,7 +227,30 @@
       p: ['From your first message to your post-operative review and beyond, our team supports you in English, French and German, by phone, email and WhatsApp.',
         'Patients who trust us become “our people”, and know they can reach us at any time with any question.'] },
   ];
-  const why = isVip ? whyVip : whyTravel;
+  const whyTravelDe = [
+    { t: 'Ein von Dr. Vekris ausgebildetes Team', media: 'ai-planning',
+      p: ['Jeder Arzt im Advanced Team wurde von Dr. Vekris ausgebildet und arbeitet nach den Standards für Planung und Haarliniengestaltung, die er entwickelt hat. Ärzte und Pflegekräfte aus aller Welt kommen in unsere Klinik in Athen, um dieselben Techniken zu lernen.',
+        'Ihre Haartransplantation wird ausschließlich von Ärzten durchgeführt, von der örtlichen Betäubung bis zum letzten Graft, und nie an Techniker delegiert.'] },
+    { t: 'Eine etablierte Klinik', media: '/assets/img/clinic/athens-lounge.webp',
+      p: ['Dr. Vekris hat Advanced Hair Clinics in Athen gegründet. Daraus sind 15 Kliniken in Griechenland und Zypern geworden, in denen die Ärzteteams mehr als 30.000 Haartransplantationen durchgeführt haben.',
+        'Patienten reisen aus über 80 Ländern zu uns, und zu den Auszeichnungen der Klinik gehören die IMTJ Medical Travel Awards und Gold bei den Medical Beauty Awards 2024.'] },
+    { t: 'Ein international renommierter Chirurg dahinter', media: '/assets/img/doc/fue-europe-speech.webp',
+      p: ['Der plastische Chirurg Dr. Anastasios Vekris ist Präsident der FUE Europe Society und gefragter Ausbilder auf den führenden Kongressen für Haarchirurgie weltweit, darunter ISHRS und IMCAS.',
+        'Er setzt die medizinischen Standards der Klinik. Wenn er Ihren Eingriff persönlich durchführen soll, wählen Sie das Upgrade Vekris Signature.'] },
+    { t: 'Verbinden Sie es mit einem Urlaub', media: '/assets/img/greece/coast-cafe.webp',
+      p: ['Sie brauchen nur 3 bis 4 Tage in Athen, und die Stadt macht diese Tage angenehm: eine europäische Hauptstadt mit ganzjährigem Sonnenschein, die Akropolis direkt vor der Tür und die Küste nur eine kurze Fahrt entfernt.',
+        'Sie können gern eine Begleitperson mitbringen oder Ihre Reise um ein paar Tage verlängern. Ihr Arzt sagt Ihnen, was in Sachen Sonne, Schwimmen und Aktivität erlaubt ist, während Ihre Kopfhaut heilt.'] },
+    { t: 'Ein besseres Preis-Leistungs-Verhältnis als gedacht', media: '/assets/img/clinic/athens-reception.webp',
+      p: ['Die Türkei ist für niedrige Lockpreise bekannt. In Athen beginnt ein Komplettpaket für die Haartransplantation bei 3.000 €, und jeder Schritt wird von Ärzten nach medizinischen EU-Standards durchgeführt.',
+        'Ihr Paket umfasst Beratung, Eingriff, Flughafentransfers und Nachkontrolle, sodass Sie schon vor der Reise wissen, wofür Sie bezahlen.'] },
+    { t: 'Techniken, für die Chirurgen anreisen', media: 'sharp-implanter',
+      p: ['Mit dem Sharp Implanter werden die Grafts in einem Schritt eingesetzt, ohne vorher Kanäle im Empfängerbereich zu öffnen. Das ermöglicht eine präzise Platzierung bei geringerer Belastung der Kopfhaut.',
+        'Wenn niemand etwas merken soll, fragen Sie nach Unshaven FUE. Die Grafts werden zwischen Ihre vorhandenen Haare gesetzt, sodass die meisten Patienten nach 24 bis 48 Stunden wieder arbeiten und unter Leute gehen.'] },
+    { t: 'Betreuung vor, während und nach Ihrem Aufenthalt', media: 'aftercare',
+      p: ['Von Ihrer ersten Nachricht bis zur Nachkontrolle und darüber hinaus betreut Sie unser Team auf Deutsch, Englisch und Französisch, per Telefon, E-Mail und WhatsApp.',
+        'Patienten, die uns vertrauen, gehören für uns dazu und wissen, dass sie uns jederzeit mit jeder Frage erreichen.'] },
+  ];
+  const why = isVip ? whyVip : (DE ? whyTravelDe : whyTravel);
   const isImg = (m) => m.startsWith('/');
   const mediaHtml = (m, attrs = '') => isImg(m)
     ? `<img src="${m}" alt="" loading="lazy" ${attrs}>`
@@ -269,7 +301,7 @@
       const [first, ...rest] = w.p;
       const extra = rest.map((x) => `<p>${x}</p>`).join('') + (w.l ? `<ul>${w.l.map((x) => `<li>${x}</li>`).join('')}</ul>` : '');
       panel.innerHTML = `<h3>${w.t}</h3><p>${first}</p>`
-        + (extra ? `<div class="why-more" id="why-more" hidden>${extra}</div><button type="button" class="why-toggle" aria-expanded="false" aria-controls="why-more">Read more</button>` : '');
+        + (extra ? `<div class="why-more" id="why-more" hidden>${extra}</div><button type="button" class="why-toggle" aria-expanded="false" aria-controls="why-more">${T('Read more', 'Weiterlesen')}</button>` : '');
       panel.classList.remove('is-swapping');
     }, reduceMotion ? 0 : 200);
     if (user && innerWidth <= 1120) $$('button', tabs)[i].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
@@ -283,7 +315,7 @@
     const more = $('#why-more', panel);
     wExpanded = more.hidden;
     more.hidden = !wExpanded;
-    btn.textContent = wExpanded ? 'Show less' : 'Read more';
+    btn.textContent = wExpanded ? T('Show less', 'Weniger anzeigen') : T('Read more', 'Weiterlesen');
     btn.setAttribute('aria-expanded', wExpanded);
     if (wExpanded) hold(); else release();
   });
@@ -345,7 +377,7 @@
   // advancedhairclinics.gr/en/hair-transplant-results-before-after
   const cases = [
     { f: 'hair-transplant-128-a', g: '4,267', h: '8,446', m: 15 },
-    { f: 'unshaven-fue-006', g: '1,656', h: '3,477', m: 12, label: 'Unshaven FUE hair transplant' },
+    { f: 'unshaven-fue-006', g: '1,656', h: '3,477', m: 12, label: T('Unshaven FUE hair transplant', 'Unshaven-FUE-Haartransplantation') },
     { f: 'hair-transplant-126-e', g: '2,318', h: '4,103', m: 12 },
     { f: 'hair-transplant-125-a', g: '2,304', h: '4,879', m: 12 },
     { f: 'hair-transplant-124-a', g: '2,288', h: '4,983', m: 12 },
@@ -358,10 +390,12 @@
   ];
   const thumbs = $('#ba-thumbs');
   const baMain = $('#ba-main');
-  const label = (c) => c.label || 'FUE hair transplant';
+  const label = (c) => c.label || T('FUE hair transplant', 'FUE-Haartransplantation');
+  const months = (m) => T(`${m} months`, `${m} Monate`);
+  const baAlt = (c) => T(`Before and after an ${label(c)} with ${c.g} grafts`, `Vorher und nachher: ${label(c)} mit ${num(c.g)} Grafts`);
   thumbs.innerHTML = cases.map((c, i) => `
-    <li><button type="button" aria-pressed="${i === 0}" data-i="${i}" aria-label="Show ${label(c)}, ${c.g} grafts">
-      <img src="${A}/img/ba/${c.f}.webp" alt="" loading="lazy" width="800" height="500"><span class="t-label">${c.g} grafts</span>
+    <li><button type="button" aria-pressed="${i === 0}" data-i="${i}" aria-label="${T('Show', 'Anzeigen:')} ${label(c)}, ${num(c.g)} Grafts">
+      <img src="${A}/img/ba/${c.f}.webp" alt="" loading="lazy" width="800" height="500"><span class="t-label">${num(c.g)} ${T('grafts', 'Grafts')}</span>
     </button></li>`).join('');
   let baCur = 0;
   const showCase = (i, fromThumb) => {
@@ -385,11 +419,11 @@
     baMain.classList.add('is-swapping');
     setTimeout(() => {
       baMain.src = `${A}/img/ba/${c.f}.webp`;
-      baMain.alt = `Before and after an ${label(c)} with ${c.g} grafts. Open full screen`;
+      baMain.alt = `${baAlt(c)}. ${T('Open full screen', 'Im Vollbild öffnen')}`;
       $('#ba-type').textContent = label(c);
-      $('#ba-grafts').textContent = c.g;
-      $('#ba-hairs').textContent = c.h;
-      $('#ba-months').textContent = `${c.m} months`;
+      $('#ba-grafts').textContent = num(c.g);
+      $('#ba-hairs').textContent = num(c.h);
+      $('#ba-months').textContent = months(c.m);
       $('#ba-count').textContent = `${baCur + 1} / ${cases.length}`;
       const done = () => baMain.classList.remove('is-swapping');
       (baMain.decode ? baMain.decode() : Promise.resolve()).then(done, done);
@@ -415,14 +449,14 @@
   lb.hidden = true;
   lb.setAttribute('role', 'dialog');
   lb.setAttribute('aria-modal', 'true');
-  lb.setAttribute('aria-label', 'Before and after photo');
+  lb.setAttribute('aria-label', T('Before and after photo', 'Vorher-Nachher-Foto'));
   lb.innerHTML = `
     <div class="lb-top"><span class="lb-count" id="lb-count"></span>
-      <button type="button" class="lb-btn lb-close" aria-label="Close">${icon('M6 6l12 12M18 6L6 18')}</button></div>
+      <button type="button" class="lb-btn lb-close" aria-label="${T('Close', 'Schließen')}">${icon('M6 6l12 12M18 6L6 18')}</button></div>
     <div class="lb-stage">
-      <button type="button" class="lb-btn" data-step="-1" aria-label="Previous case">${icon('M15 6l-6 6 6 6')}</button>
+      <button type="button" class="lb-btn" data-step="-1" aria-label="${T('Previous case', 'Vorheriger Fall')}">${icon('M15 6l-6 6 6 6')}</button>
       <img id="lb-img" alt="">
-      <button type="button" class="lb-btn" data-step="1" aria-label="Next case">${icon('M9 6l6 6-6 6')}</button>
+      <button type="button" class="lb-btn" data-step="1" aria-label="${T('Next case', 'Nächster Fall')}">${icon('M9 6l6 6-6 6')}</button>
     </div>
     <p class="lb-cap" id="lb-cap"></p>`;
   document.body.appendChild(lb);
@@ -433,9 +467,9 @@
     lbImg.classList.add('is-swapping');
     lbImg.onload = () => lbImg.classList.remove('is-swapping');
     lbImg.src = `${A}/img/ba/${c.f}.webp`;
-    lbImg.alt = `Before and after an ${label(c)} with ${c.g} grafts`;
+    lbImg.alt = baAlt(c);
     $('#lb-count', lb).textContent = `${baCur + 1} / ${cases.length}`;
-    $('#lb-cap', lb).innerHTML = `<strong>${label(c)}</strong><span>Grafts<b>${c.g}</b></span><span>Hairs<b>${c.h}</b></span><span>Post-procedure<b>${c.m} months</b></span>`;
+    $('#lb-cap', lb).innerHTML = `<strong>${label(c)}</strong><span>Grafts<b>${num(c.g)}</b></span><span>${T('Hairs', 'Haare')}<b>${num(c.h)}</b></span><span>${T('Post-procedure', 'Nach dem Eingriff')}<b>${months(c.m)}</b></span>`;
   };
   // Stepping in the lightbox moves the gallery behind it too
   const lbStep = (d) => { showCase(baCur + d); lbRender(); };
@@ -485,7 +519,7 @@
   if (meetBtn) meetBtn.addEventListener('click', () => {
     const more = $('#meet-more');
     more.hidden = !more.hidden;
-    meetBtn.textContent = more.hidden ? 'Read more' : 'Show less';
+    meetBtn.textContent = more.hidden ? T('Read more', 'Weiterlesen') : T('Show less', 'Weniger anzeigen');
     meetBtn.setAttribute('aria-expanded', !more.hidden);
     setupJourney();
   });
@@ -498,18 +532,24 @@
     { id: '_lF3QzLdcqQ', img: 'dimos-beke', name: 'Dimos Beke: my experience at Advanced Hair Clinics', t: 'Unshaven FUE Hair Transplant', g: '1,820', h: '4,145', d: '1' },
     { id: 'g4F6fGoYw1A', img: 'result-after', name: 'Result after hair transplant', t: 'FUE Hair Transplant', g: '2,318', h: '4,103', d: '1' },
   ];
+  if (DE) {
+    const deNames = ['Echte Ergebnisse: Haartransplantation bei Advanced Hair Clinics', 'Haartransplantation: Steve Tesser',
+      'Haartransplantation: meine Erfahrung bei Advanced Hair Clinics', 'Dimos Beke: meine Erfahrung bei Advanced Hair Clinics', 'Ergebnis nach der Haartransplantation'];
+    vids.forEach((v, i) => Object.assign(v, { name: deNames[i], t: v.t.startsWith('Unshaven') ? 'Unshaven-FUE-Haartransplantation' : 'FUE-Haartransplantation', g: num(v.g), h: num(v.h) }));
+  }
+  const CAP = T('en', 'de');
   const vtPlayer = $('#vt-player');
   const vtList = $('#vt-list');
   let vCur = 0;
   const vSrc = (v) => `${A}/img/testimonials/${v.img}.webp`;
   vtList.innerHTML = vids.map((v, i) => `<li><button type="button" data-i="${i}" aria-current="${i === 0}">
     <span class="vt-thumb"><img src="${vSrc(v)}" alt="" loading="lazy" width="640" height="360"></span>
-    <span><strong>${v.name}</strong><span>${v.g} grafts</span></span></button></li>`).join('');
+    <span><strong>${v.name}</strong><span>${v.g} ${T('grafts', 'Grafts')}</span></span></button></li>`).join('');
   // English captions: use an English track when the video has one, otherwise ask the player to
   // auto-translate the video's own captions into English (YouTube's Auto-translate option).
   // The translation call is not in YouTube's documented API, so every step falls back safely:
   // if the player script never loads, the plain embed plays with captions on.
-  const ytParams = 'autoplay=1&rel=0&modestbranding=1&cc_load_policy=1&cc_lang_pref=en&hl=en';
+  const ytParams = `autoplay=1&rel=0&modestbranding=1&cc_load_policy=1&cc_lang_pref=${CAP}&hl=${CAP}`;
   const plainEmbed = (v) => `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?${ytParams}" title="${v.name}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
   let ytApi;
   const loadYT = () => ytApi || (ytApi = new Promise((res, rej) => {
@@ -526,10 +566,10 @@
     try {
       const list = player.getOption('captions', 'tracklist') || [];
       if (!list.length) return false;
-      const en = list.find((t) => /^en/i.test(t.languageCode));
+      const en = list.find((t) => new RegExp(`^${CAP}`, 'i').test(t.languageCode));
       player.setOption('captions', 'track', en
         ? { languageCode: en.languageCode }
-        : { languageCode: list[0].languageCode, translationLanguage: { languageCode: 'en', languageName: 'English' } });
+        : { languageCode: list[0].languageCode, translationLanguage: { languageCode: CAP, languageName: T('English', 'Deutsch') } });
       return true;
     } catch (e) { return false; }
   };
@@ -545,7 +585,7 @@
         host: 'https://www.youtube-nocookie.com',
         videoId: v.id,
         width: '100%', height: '100%',
-        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, cc_load_policy: 1, cc_lang_pref: 'en', hl: 'en', playsinline: 1 },
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, cc_load_policy: 1, cc_lang_pref: CAP, hl: CAP, playsinline: 1 },
         events: {
           onReady: (e) => { e.target.getIframe().title = v.name; e.target.playVideo(); },
           // The captions module reports its tracks once it loads
@@ -560,13 +600,13 @@
     const v = vids[i];
     $$('button', vtList).forEach((b) => b.setAttribute('aria-current', b.dataset.i == i));
     $('#vt-name').textContent = v.name;
-    $('#vt-stats').innerHTML = [['Treatment', v.t], ['Grafts', v.g], ['Hairs', v.h], ['Treatment days', v.d]]
+    $('#vt-stats').innerHTML = [[T('Treatment', 'Behandlung'), v.t], ['Grafts', v.g], [T('Hairs', 'Haare'), v.h], [T('Treatment days', 'Behandlungstage'), v.d]]
       .map(([k, val]) => `<div><dt>${k}</dt><dd>${val}</dd></div>`).join('');
     if (play) {
       playWithEnglishCaptions(v);
       return;
     }
-    vtPlayer.innerHTML = `<button type="button" class="vt-poster" aria-label="Play video: ${v.name}"><img src="${vSrc(v)}" alt="${v.name}" width="1600" height="900" loading="lazy"><span class="vt-play" aria-hidden="true"></span></button>`;
+    vtPlayer.innerHTML = `<button type="button" class="vt-poster" aria-label="${T('Play video', 'Video abspielen')}: ${v.name}"><img src="${vSrc(v)}" alt="${v.name}" width="1600" height="900" loading="lazy"><span class="vt-play" aria-hidden="true"></span></button>`;
   };
   vtPlayer.addEventListener('click', (e) => { if (e.target.closest('.vt-poster')) showVid(vCur, true); });
   vtList.addEventListener('click', (e) => {
