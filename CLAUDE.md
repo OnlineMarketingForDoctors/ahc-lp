@@ -35,6 +35,7 @@ and share `/assets` by absolute path.
 - The enquiry form on both pages is a LeadConnector (GoHighLevel) iframe; `form_embed.js` sizes it to the form.
 - `/thank-you/` is the page to send form submissions to (`?from=greece` or `?from=vip` tailors the
   copy and links). Its styles are in `assets/css/thanks.css`.
+- `/danke/` is the German thank-you page, for the German travel page's form. Its links go to the German page.
 - `assets/css/base.css` is the homepage stylesheet from the `advanced-hair-clinics` repo, trimmed to the
   sections reused here. Page-specific styles go in their own file (`assets/css/greece.css`).
 - Images are WebP. Generated images for this site are in `assets/img/greece/`, with an `-sm` version for mobile.
