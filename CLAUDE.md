@@ -32,7 +32,8 @@ and share `/assets` by absolute path.
 - Pricing (Advanced Team): one surgical day from €3,000, two surgical days €6,000. Never state a graft count:
   grafts are set by the individual medical assessment. The Greece vs Turkey and UK comparisons are qualitative
   and await the clinic's approval.
-- The enquiry form on both pages is a LeadConnector (GoHighLevel) iframe; `form_embed.js` sizes it to the form.
+- The enquiry form is a LeadConnector (GoHighLevel) iframe; `form_embed.js` sizes it to the form. English pages use
+  form `NWlmI161OVrViQD78PH1` (redirects to `/thank-you/`); the German page uses `Kl94qZe0Y7DurxULF911` (to `/danke/`).
 - `/thank-you/` is the page to send form submissions to (`?from=greece` or `?from=vip` tailors the
   copy and links). Its styles are in `assets/css/thanks.css`.
 - `/danke/` is the German thank-you page, for the German travel page's form. Its links go to the German page.
