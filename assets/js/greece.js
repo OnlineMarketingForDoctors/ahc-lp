@@ -618,11 +618,10 @@
   });
   showVid(0, false);
 
-  /* ---------- Journey: pinned horizontal scroll ---------- */
+  /* ---------- Journey: horizontal timeline, moved with the arrows (or swipe), not by page scroll ---------- */
   const journey = $('.journey');
   const jTrack = $('#journey-track');
   const jBar = $('.journey-bar span');
-  const desktopPin = matchMedia('(min-width: 1121px)');
   const jCards = $$('.j-card', jTrack);
   jCards.forEach((c, i) => {
     const node = document.createElement('span');
@@ -650,7 +649,8 @@
     fillTimeline(p * dist + (p > 0.98 ? innerWidth : 0), innerWidth);
   };
   function setupJourney() {
-    const native = reduceMotion || !desktopPin.matches;
+    // Always the manual scroller: the section no longer pins and slides with page scroll
+    const native = true;
     journey.classList.toggle('is-native', native);
     if (native) { journey.style.height = ''; fillTimeline(jTrack.scrollLeft, jTrack.clientWidth); return; }
     const dist = jTrack.scrollWidth - innerWidth;
@@ -667,7 +667,28 @@
     const max = jTrack.scrollWidth - jTrack.clientWidth;
     jBar.style.width = `${max ? (jTrack.scrollLeft / max) * 100 : 0}%`;
     fillTimeline(jTrack.scrollLeft + (jTrack.scrollLeft >= max - 2 ? jTrack.clientWidth : 0), jTrack.clientWidth);
+    jArrowState();
   }, { passive: true });
+  // Previous / next arrows beside the heading
+  const jNav = document.createElement('div');
+  jNav.className = 'journey-nav';
+  jNav.innerHTML = `<button type="button" class="j-btn" data-dir="-1" aria-label="${T('Previous step', 'Vorheriger Schritt')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>`
+    + `<button type="button" class="j-btn" data-dir="1" aria-label="${T('Next step', 'Nächster Schritt')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;
+  $('.journey-head').appendChild(jNav);
+  const jBtns = $$('.j-btn', jNav);
+  function jArrowState() {
+    const max = jTrack.scrollWidth - jTrack.clientWidth;
+    jBtns[0].disabled = jTrack.scrollLeft <= 2;
+    jBtns[1].disabled = jTrack.scrollLeft >= max - 2;
+  }
+  jNav.addEventListener('click', (e) => {
+    const b = e.target.closest('.j-btn');
+    if (!b) return;
+    const step = jCards[1].offsetLeft - jCards[0].offsetLeft;
+    jTrack.scrollBy({ left: +b.dataset.dir * step, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+  addEventListener('resize', jArrowState);
+  jArrowState();
 
   /* ---------- FAQ: one answer open at a time ---------- */
   const faqs = $$('.faq-list details');

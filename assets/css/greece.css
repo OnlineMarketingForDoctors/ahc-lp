@@ -526,6 +526,29 @@ html[lang="de"] .hero-content { min-width: 0; }
 }
 
 /* ==========================================================
+   JOURNEY: previous / next arrows beside the heading
+   ========================================================== */
+.journey-nav { display: flex; gap: 10px; justify-self: end; align-self: end; }
+.j-btn {
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: #fff; border: 1.5px solid var(--mist); color: var(--ink);
+  box-shadow: var(--shadow-md); transition: background .25s, color .25s, border-color .25s, opacity .25s;
+}
+.j-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.j-btn:hover:not(:disabled) { background: var(--teal); border-color: var(--teal); color: #fff; }
+.j-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+.j-btn:disabled { opacity: .35; cursor: default; box-shadow: none; }
+/* No scrollbar under the cards on desktop: the arrows do the work */
+.journey.is-native .journey-track { scrollbar-width: none; scroll-padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2)); }
+.journey.is-native .journey-track::-webkit-scrollbar { display: none; }
+@media (max-width: 1120px) {
+  .journey-nav { justify-self: start; margin-top: 18px; }
+}
+@media (max-width: 760px) {
+  .j-btn { width: 44px; height: 44px; }
+}
+
+/* ==========================================================
    RESPONSIVE
    ========================================================== */
 @media (max-width: 1120px) {
