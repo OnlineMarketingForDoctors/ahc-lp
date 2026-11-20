@@ -539,6 +539,8 @@ html[lang="de"] .hero-content { min-width: 0; }
 .j-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
 .j-btn:disabled { opacity: .35; cursor: default; box-shadow: none; }
 /* No scrollbar under the cards on desktop: the arrows do the work */
+.journey.is-native .journey-track::before { right: auto; width: var(--rail-w, 100%); }
+.journey.is-native .journey-track::after { max-width: var(--rail-w, 100%); }
 .journey.is-native .journey-track { scrollbar-width: none; scroll-padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2)); }
 .journey.is-native .journey-track::-webkit-scrollbar { display: none; }
 @media (max-width: 1120px) {

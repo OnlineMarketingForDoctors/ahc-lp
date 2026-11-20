@@ -635,6 +635,9 @@
   });
   const fillTimeline = (shift, viewW) => {
     const start = jCards[0].offsetLeft;
+    // The rail spans every card, not just the visible part of the scrolling row
+    const last = jCards[jCards.length - 1];
+    jTrack.style.setProperty('--rail-w', `${last.offsetLeft + last.offsetWidth - start}px`);
     const reach = shift + viewW * 0.6;
     jTrack.style.setProperty('--fill', `${Math.max(0, reach - start)}px`);
     jCards.forEach((c) => c.classList.toggle('is-reached', c.offsetLeft <= reach));
