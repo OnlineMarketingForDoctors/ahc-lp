@@ -526,6 +526,30 @@ html[lang="de"] .hero-content { min-width: 0; }
 }
 
 /* ==========================================================
+   JOURNEY as a grid: no pinned or sideways scroll
+   ========================================================== */
+.journey.is-grid .journey-pin { position: static; height: auto; min-height: 0; overflow: visible; padding: clamp(80px, 9vw, 120px) 0; display: block; }
+.journey.is-grid .journey-bar { display: none; }
+.journey.is-grid .journey-track {
+  width: auto; max-width: var(--max); margin: 40px auto 0; padding: 0 var(--gutter);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px);
+  transform: none; will-change: auto;
+}
+.journey.is-grid .journey-track::before, .journey.is-grid .journey-track::after,
+.journey.is-grid .journey-track > li:last-child::after, .journey.is-grid .j-card::before { display: none; }
+.journey.is-grid .j-card { flex: none; }
+.journey.is-grid .j-node {
+  left: 16px; top: 16px; width: 36px; height: 36px; font-size: 14px;
+  color: #fff; background: var(--teal); border: 0; box-shadow: 0 6px 16px -6px rgba(0,0,0,.45);
+}
+@media (max-width: 1120px) {
+  .journey.is-grid .journey-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .journey.is-grid .journey-track { grid-template-columns: 1fr; margin-top: 28px; }
+}
+
+/* ==========================================================
    RESPONSIVE
    ========================================================== */
 @media (max-width: 1120px) {

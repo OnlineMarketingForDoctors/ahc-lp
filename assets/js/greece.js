@@ -618,56 +618,19 @@
   });
   showVid(0, false);
 
-  /* ---------- Journey: pinned horizontal scroll ---------- */
+  /* ---------- Journey: a plain grid of numbered steps (no pinned or sideways scroll) ---------- */
   const journey = $('.journey');
-  const jTrack = $('#journey-track');
-  const jBar = $('.journey-bar span');
-  const desktopPin = matchMedia('(min-width: 1121px)');
-  const jCards = $$('.j-card', jTrack);
+  const jCards = $$('.j-card', journey);
+  journey.classList.add('is-grid');
   jCards.forEach((c, i) => {
     const node = document.createElement('span');
     node.className = 'j-node';
     node.setAttribute('aria-hidden', 'true');
     node.textContent = i === jCards.length - 1 ? '✓' : i + 1;
-    const arrow = document.createElement('span');
-    arrow.className = 'j-arrow';
-    arrow.setAttribute('aria-hidden', 'true');
-    c.prepend(node, arrow);
+    c.prepend(node);
   });
-  const fillTimeline = (shift, viewW) => {
-    const start = jCards[0].offsetLeft;
-    const reach = shift + viewW * 0.6;
-    jTrack.style.setProperty('--fill', `${Math.max(0, reach - start)}px`);
-    jCards.forEach((c) => c.classList.toggle('is-reached', c.offsetLeft <= reach));
-  };
-  const moveJourney = () => {
-    if (journey.classList.contains('is-native')) return;
-    const dist = +journey.dataset.dist || 0;
-    const top = journey.getBoundingClientRect().top;
-    const p = Math.min(1, Math.max(0, -top / (journey.offsetHeight - innerHeight || 1)));
-    jTrack.style.transform = `translate3d(${-p * dist}px,0,0)`;
-    jBar.style.width = `${p * 100}%`;
-    fillTimeline(p * dist + (p > 0.98 ? innerWidth : 0), innerWidth);
-  };
-  function setupJourney() {
-    const native = reduceMotion || !desktopPin.matches;
-    journey.classList.toggle('is-native', native);
-    if (native) { journey.style.height = ''; fillTimeline(jTrack.scrollLeft, jTrack.clientWidth); return; }
-    const dist = jTrack.scrollWidth - innerWidth;
-    journey.style.height = `${innerHeight + Math.max(0, dist)}px`;
-    journey.dataset.dist = Math.max(0, dist);
-    moveJourney();
-  }
-  addEventListener('scroll', moveJourney, { passive: true });
-  addEventListener('resize', setupJourney);
-  addEventListener('load', setupJourney);
-  setupJourney();
-  jTrack.addEventListener('scroll', () => {
-    if (!journey.classList.contains('is-native')) return;
-    const max = jTrack.scrollWidth - jTrack.clientWidth;
-    jBar.style.width = `${max ? (jTrack.scrollLeft / max) * 100 : 0}%`;
-    fillTimeline(jTrack.scrollLeft + (jTrack.scrollLeft >= max - 2 ? jTrack.clientWidth : 0), jTrack.clientWidth);
-  }, { passive: true });
+  // Kept so other sections can call it after they change height; nothing to recalculate now.
+  function setupJourney() {}
 
   /* ---------- FAQ: one answer open at a time ---------- */
   const faqs = $$('.faq-list details');
