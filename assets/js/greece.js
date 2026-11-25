@@ -99,6 +99,17 @@
     phone.addEventListener('change', place);
   }
 
+  /* ---------- Hero press ticker: a hidden copy of the logos makes the loop seamless ---------- */
+  const pressList = $('.hero-press-list');
+  if (pressList) {
+    [...pressList.children].forEach((li) => {
+      const c = li.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      $$('a', c).forEach((a) => a.setAttribute('tabindex', '-1'));
+      pressList.append(c);
+    });
+  }
+
   /* ---------- Counters ---------- */
   const countIO = new IntersectionObserver((entries) => {
     entries.forEach(({ isIntersecting, target }) => {
