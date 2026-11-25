@@ -195,3 +195,6 @@
 @media (max-width: 1120px) {
   .vip .gr-hero .hero-content { padding-bottom: 150px; }
 }
+
+/* The press strip stays on one line beside the button, so it can run to the right edge */
+@media (min-width: 1121px) { .vip .hero-cta { flex-wrap: nowrap; } }

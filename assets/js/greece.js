@@ -108,6 +108,20 @@
       $$('a', c).forEach((a) => a.setAttribute('tabindex', '-1'));
       pressList.append(c);
     });
+    // data-reach="edge" (VIP page): on desktop the strip runs to the right-hand content edge,
+    // mirroring the hero's left margin
+    const press = $('.hero-press');
+    const fitPress = () => {
+      press.style.width = '';
+      press.style.flex = '';
+      if (press.dataset.reach !== 'edge' || innerWidth <= 1120) return;
+      const end = innerWidth - $('.hero-content').getBoundingClientRect().left;
+      const w = end - press.getBoundingClientRect().left;
+      if (w > 160) { press.style.flex = 'none'; press.style.width = `${w}px`; }
+    };
+    addEventListener('resize', fitPress);
+    addEventListener('load', fitPress);
+    fitPress();
   }
 
   /* ---------- Counters ---------- */
